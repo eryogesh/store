@@ -1,0 +1,63 @@
+{
+    "Admin": {
+        "ApprovalRequests": "Demandes d'approbation",
+        "Name": "prénom",
+        "Approve": "Approuver",
+        "SubCategory": "Sous-catégorie",
+        "Category": "Catégorie",
+        "Owner": "Propriétaire",
+        "Profile": "Profile",
+        "Search": "Chercher",
+        "SkypeChat": "Skype Chat",
+        "Success":"Succès",
+        "ErrorMessage":"Message d'erreur",
+        "CategoriesManagement": {
+            "Title": "Gestion des catégories",
+            "SubTitle": "Catégories principales",
+            "SubCategories": "Sous Catégories",
+            "SelectCategory": "Choisir une catégorie",
+            "UpdateCategory": "mettre à jour",
+            "AddCategory": "ajouter une catégorie",
+            "Submit": "Soumettre",
+            "Delete": "Effacer",
+            "DeleteCategory": "Supprimer la catégorie",
+            "AddSubCategory": "Ajouter une sous-catégorie",
+            "SubCatCategory": "Sous-catégorie",
+            "SelectMainCategory": "Veuillez sélectionner une catégorie principale",
+            "SelectAtleastOneCategoryFromList": "Sélectionnez au moins une catégorie dans la liste",
+            "SelectAtleastOneSubcategory": "Veuillez sélectionner au moins une sous-catégorie"
+        },
+        "UserAccess": {
+            "Date": "Date ",
+            "Role": "Rôle",
+            "Action": "action",
+            "capgemini": "capgemini",
+            "undefinedRoleDeveloper": "Role de  Développeur indéfini",
+            "roleAndProfileErrorMsg": "L'utilisateur a été affecté avec un nouveau rôle et profil."
+        },
+        "AssetApproval": {
+            "Type": "Type",
+            "LastUpdated": "Dernière mise à jour",
+            "Owner": "Propriétaire",
+            "NoRecordFound": "Aucun Enregistrement Trouvé"
+        },
+        "ViewAssetApproval": {
+            "Version": "Version",
+            "Download": "Download",
+            "Filetype": "Type de fichier",
+            "Size": "Taille",
+            "EffortsInvested": "Efforts investis",
+            "LastUpdated": "Dernière mise à jour",
+            "Tags": "Mots clés",
+            "KeyFeatures": "Principales caractéristiques",
+            "SupportingFiles": "Fichiers de support",
+            "NoSupportingFiles": "Aucun fichier de support",
+            "DeleteAsset": "Supprimer le composant ",
+            "Reject": "Rejeter",
+            "EnterTextHere": "Entrez le texte ici...",
+            "RejectAsset": "Rejeter l'élément",
+            "ApproveAsset": "Approuver l'actif",
+            "PleaseSelectProfile":"Veuillez sélectionner le profil"
+        }
+    }
+}

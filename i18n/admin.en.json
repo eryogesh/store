@@ -1,0 +1,63 @@
+{
+    "Admin": {
+        "ApprovalRequests": "Approval Requests",
+        "Name": "Name",
+        "Approve": "Approve",
+        "SubCategory": "Sub-Category",
+        "Category": "Category",
+        "Owner": "Owner",
+        "Profile": "Profile",
+        "Search": "Search",
+        "SkypeChat": "Skype Chat",
+        "Success":"success",
+        "ErrorMessage":"Error Message",
+        "CategoriesManagement": {
+            "Title": "Categories Management",
+            "SubTitle": "Main Categories",
+            "SubCategories": "Sub Categories",
+            "SelectCategory": "Select category",
+            "UpdateCategory": "Update",
+            "AddCategory": "Add Category",
+            "Submit": "Submit",
+            "Delete": "Delete",
+            "DeleteCategory": "Delete Category",
+            "AddSubCategory": "Add Sub Category",
+            "SubCatCategory": "Sub Category",
+            "SelectMainCategory": "Please select a main category",
+            "SelectAtleastOneCategoryFromList": "Select atleast one category from the list",
+            "SelectAtleastOneSubcategory": "Please select atleast one subcategory"
+        },
+        "UserAccess": {
+            "Date": "Date",
+            "Role": "Role",
+            "Action": "Action",
+            "capgemini": "capgemini",
+            "undefinedRoleDeveloper": "Undefined role Developer",
+            "roleAndProfileErrorMsg": "User has been assigned with new Role and Profile."
+        },
+        "AssetApproval": {
+            "Type": "Type",
+            "LastUpdated": "Last Updated",
+            "NoRecordFound": "No Record Found",
+            "Owner": "Owner"
+        },
+        "ViewAssetApproval": {
+            "Version": "Version",
+            "Download": "Download",
+            "Filetype": "Filetype",
+            "Size": "Size",
+            "EffortsInvested": "Efforts Invested",
+            "LastUpdated": "Last Updated",
+            "Tags": "Tags",
+            "KeyFeatures": "Key Features",
+            "SupportingFiles": "Supporting Files",
+            "NoSupportingFiles": "No Supporting Files",
+            "DeleteAsset": "Delete Asset",
+            "Reject": "Reject",
+            "EnterTextHere": "Enter text here...",
+            "RejectAsset": "Reject Asset",
+            "ApproveAsset": "Approve Asset",
+            "PleaseSelectProfile":"Please Select Profile"
+        }
+    }
+}

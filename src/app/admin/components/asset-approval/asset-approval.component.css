@@ -1,0 +1,121 @@
+.center
+{
+    text-align: center;
+    cursor: pointer;
+}
+.mini-layout
+{
+    padding-bottom:10%;
+    overflow-x:hidden;
+    padding: 3%;
+}
+.input-group{
+    margin-left: -28px;
+
+}
+.recordHeader{
+    margin-top: 2%;
+  }
+.tableHeader{
+    width:100%;
+    margin-bottom: 1%;
+    margin-top: 25px;
+  }
+.admin_profile-pic-border {
+ 
+  width: auto;
+  max-width:33%;
+  height: 40px;
+}
+.error-container{
+  font-weight: bold;
+    font-size: 117%;
+    margin-top: 1%;
+}
+
+.resetSearchButton{
+    padding: 6px 12px;
+    height:34px;
+    width:67px;
+    font-size:14px;
+    margin-top:20px;
+}
+.emailSearch{
+    width: 122%;
+    margin-left: 92%;
+    margin-top: 1%;
+  }
+  .ownername-td{
+    word-wrap: break-word;
+    overflow: hidden;
+    text-align: center;
+    display: table-cell;
+  }
+ 
+@media (min-width:294px) and (max-width:767px) {
+  .center th{
+    text-align: center;
+}
+.center td{
+text-align: center;
+}
+  .emailSearch{
+    width: 120%;
+    float: right;
+    margin-bottom: 33px;
+    margin-right: -40px;
+  }
+.recordHeader{
+  margin-top: 14%;
+  margin-left: 1px;
+}
+.profile-search {
+  margin-bottom: -28px;}  
+
+    .tableHeader a{
+        width:100%;
+        margin-bottom:25px;
+      }
+      select {width: 35%;}
+     .tabmob ul{
+      margin-bottom: -31px;
+      }
+     
+}
+
+@media (min-width:320px) and (max-width:568px) {
+  .recordHeader{
+    margin-top: 18%;
+  }
+}
+
+@media (min-width:375px) and (max-width:812px) {
+.emailSearch{
+  margin-left: 6px;
+}
+}
+
+@media (min-width:768px) and (max-width:1024px) {
+  .emailSearch {
+    margin-left: 99px !important;
+    margin-top: 13%!important;
+}
+.recordHeader{
+  margin-top: 5%!important;
+    margin-left: 4px!important;
+}
+}
+
+@media (min-width:600px) and (max-width:1024px) {
+.recordHeader{
+  margin-top: 10%;
+    margin-left: 4px;
+}
+  .emailSearch {
+    margin-left: 236px;
+    margin-top: 13%;
+}
+}
+
+
+

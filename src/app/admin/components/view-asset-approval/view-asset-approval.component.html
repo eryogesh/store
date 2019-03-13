@@ -1,0 +1,159 @@
+<div class="pageLayout">
+  <div class="row">
+    <img class="img-fluid" alt="100%x250" src="assets/images/artifact/detail-bg-default.png">
+
+    <div class=" imagedetails col-lg-12 col-sm-12 col-md-12">
+      <img class="imageProject" src="{{utilityService.getProjectImage(selectedArtifactData.imageUrl,selectedArtifactData.projectType)}}"
+        alt="{{selectedArtifactData.projectType}}" (error)="utilityService.imgErorHandler($event, 'project')" />
+      <div>
+        <span [hidden]="selectedArtifactData.projectName==null || selectedArtifactData.versionName==null">{{selectedArtifactData.projectName}} | {{'Admin.ViewAssetApproval.Version' | translate }} ({{selectedArtifactData.versionNo}}):{{selectedArtifactData.versionName}}</span>
+      </div>
+      <div>
+        <span class="text-font-12">{{'Admin.ViewAssetApproval.Filetype' | translate }}: {{fileType}} | {{'Admin.ViewAssetApproval.Size' | translate
+          }}: {{projectDataSize | number : '0.1-2'}} MB </span>
+      </div>
+      <button type="button" class="download-button" pButton name="Download" (click)="downloadArtifact();">{{ 'Admin.ViewAssetApproval.Download' | translate }}</button>
+    </div>
+  </div>
+
+</div>
+
+<div id="artifactDetails">
+  <div class="row artifactDetailsRow">
+    <div class="col-lg-8 col-sm-8 col-md-8">
+      <div class="row tc-color-blue font-weight-500">
+        <img src="{{selectedArtifactData.ownerImage}}" onError="this.src='../../../assets/images/user-icon.png'" class="photo display-image">
+        <span>{{selectedArtifactData.ownerName}}
+          <a [href]="'sip:' + selectedArtifactData.ownerEmailID | safeUrl" pTooltip="{{ 'Admin.SkypeChat' | translate }}" tooltipPosition="top">
+            <i class="fa fa-skype tc-color-blue" aria-hidden="true"></i>
+          </a>
+        </span>
+
+      </div>
+
+      <div class="row descriptionRow">
+        <div class="description">
+          <p [innerHTML]="description | sanitizeHtml"></p>
+        </div>
+      </div>
+
+      <div class="row text-font-14">
+        <span>
+          <i class="fa fa-clock-o tc-color-blue" aria-hidden="true"></i>
+          {{'Admin.ViewAssetApproval.EffortsInvested' | translate }}: {{selectedArtifactData.effortsInvested}} PD |
+        </span>
+
+        <span>
+          &nbsp;{{'Admin.Category' | translate }}: {{selectedArtifactData.categoryName}} |
+        </span>
+        <span>
+          &nbsp;{{'Admin.SubCategory' | translate }}: {{selectedArtifactData.subCategoryName}} |
+        </span>
+        <span>
+          &nbsp;{{'Admin.ViewAssetApproval.LastUpdated' | translate }}: {{selectedArtifactData.projectLastUpdate | date : 'dd-MM-yy'}}
+        </span>
+      </div>
+
+      <div class="row text-font-14">
+        <div class="col-lg-8 col-sm-8 col-md-8 tags">
+          <label>
+            <b>{{'Admin.ViewAssetApproval.Tags' | translate }}:</b>
+          </label>
+          <span class="tags-row"> {{selectedArtifactData.tags}} </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="keyContainer">
+  <div class="row">
+    <div class="col-lg-12 col-sm-12 col-md-12">
+        <h6>
+          <b>{{'Admin.ViewAssetApproval.KeyFeatures' | translate }}</b>
+        </h6>
+      <div class="keyfeaturesInnerFont">
+        <span class="setInnerFont" [innerHTML]="features | sanitizeHtml"></span>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="row ">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 cover-container" *ngIf="isSupportFiles">
+        <h6 *ngIf="!isSupportFiles">
+            <b>{{'Admin.ViewAssetApproval.NoSupportingFiles' | translate }}</b>
+          </h6>
+          <h6 *ngIf="isSupportFiles">
+            <b>{{'Admin.ViewAssetApproval.SupportingFiles' | translate }}</b>
+          </h6>
+      <!-- START PANEL -->
+      <div class="supportive-item" *ngFor="let supportingImage of supportingFile ">
+        <div>
+          <div class="cursor-pointer">
+            <img class="supportingImage" src="{{supportingImage.assetSupportFileName}}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-sm-12 col-md-12">
+      <h6>
+        <b>{{'Admin.Profile' | translate }}</b>
+      </h6>
+      <div class="profileRow">
+        <div *ngFor="let profile of profiles">
+          <label [hidden]="profile.profileId==='AP'">
+            <input class="profile-checkbox" type="checkbox" id="{{profile.profileId}}" ng-model="checkedEle[profile.profileName]" name="userProfiles"
+              [hidden]="profile.profileId==='AP'" [value]=profile.profileName required> {{profile.profileName}}
+          </label>
+        </div>
+        <div class="error-container" *ngIf="errorMsgProfile">
+          <p> {{errorMsgProfile}} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  <p-dialog header="{{'Admin.ViewAssetApproval.RejectAsset' | translate }}" [(visible)]="rejectAssetDialog" [width]="700" modal="modal"
+  [responsive]="true" dismissableMask="true">
+  <form #formCtrl="ngForm">
+    <app-ngx-editor placeholder="{{'Admin.ViewAssetApproval.EnterTextHere' | translate }}" [spellcheck]="true" required [(ngModel)]="comment"
+      name="comment" required></app-ngx-editor>
+    <input class="checkboxInputBox" [(ngModel)]="checkboxFlag" name="checkbox" type="checkbox" />
+    <label class="checkboxLabel">{{'Admin.ViewAssetApproval.DeleteAsset' | translate }}</label>
+    <p-footer>
+      <div class="ui-dialog-buttonpane">
+        <button pButton class="button-style rejectButton" type="submit" name="submit" (click)="rejectProject('RJ',comment,checkboxFlag);" [disabled]="!comment">
+          {{'Admin.ViewAssetApproval.Reject' | translate }} </button>
+        <button class="ui-button-secondary button-style cancelButton" type="reset" pButton name="cancel" (click)="cancelRejectPopup('RJ');">
+          {{ 'CancelBtn' | translate }} </button>
+      </div>
+    </p-footer>
+  </form>
+</p-dialog>
+<button class="button-style modalApproveButton" pButton type="button" (click)="openModalApprove()">{{'Admin.Approve' | translate }}</button>
+<p-dialog header="{{'Admin.ViewAssetApproval.ApproveAsset' | translate }}" [(visible)]="displayAproveAsset" [width]="700"
+  modal="modal" [responsive]="true" dismissableMask="true">
+  <form #formCtrl="ngForm">
+    <app-ngx-editor placeholder="{{'Admin.ViewAssetApproval.EnterTextHere' | translate }}" [spellcheck]="true" required [(ngModel)]="comment"
+      name="comment" required></app-ngx-editor>
+    <p-footer>
+      <div class="ui-dialog-buttonpane">
+        <button class="button-style rejectButton" type="submit" name="submit" pButton (click)="rejectProject('AP',comment, checkboxFlag);" [disabled]="!comment">
+          {{'Admin.Approve' | translate }} </button>
+        <button class="ui-button-secondary button-style cancelButton" type="reset" pButton name="cancel" (click)="cancelAprovalPopup('AP');">
+          {{ 'CancelBtn' | translate }} </button>
+      </div>
+    </p-footer>
+  </form>
+</p-dialog>
+<button class="modalRejectButton reject ui-button-secondary" pButton type="button" (click)="openmodalReject()"> {{'Admin.ViewAssetApproval.Reject' | translate }} </button>
+
+</div>
+
+<p-growl [style]="{'top':'100px'}"></p-growl>

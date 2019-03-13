@@ -1,0 +1,156 @@
+<div class="container">
+<div class="top-container">
+    <!-- ####### START:ARTIFACT ########-->
+    <!-- <p-growl [value]="msgs" [style]="{'top':'100px'}"></p-growl> -->
+    <p-dataScroller [value]="assetData" [rows]="12" (onLazyLoad)="loadArtifacts($event)" [lazy]="true" [totalRecords]="totalRecords">
+        <p-header>            
+            <div class="ui-helper-clearfix  dv-header-box">
+                <div class="ui-g filterWrapper">
+                    <div class="ui-g-3 ui-md-4 padl0">
+                            <p-dropdown [options]="assets" [(ngModel)]="selectedAsset" styleClass="dropSelItm">
+                                    <ng-template let-asset pTemplate="item">
+                                        <div class="ui-helper-clearfix tempAfter" (click)="checkedAssets(asset.value)">
+                                            <div class="dropAssetCls">
+                                                {{asset.label}}
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                    </div>
+                    <div class="ui-g-1 ui-md-4"></div>
+                    <div class="ui-g-8 ui-md-4">
+                        <div class="mainGrid grid-div" *ngIf="this.projectType !== this.favouritesLabel">
+                                <div class="filterContainer">
+                                        <p-dropdown [options]="types" [(ngModel)]="selectedType" icon="fas fa-filter" styleClass="dropSelItm typeDropdown">
+                                            <ng-template let-type pTemplate="item">
+                                                <div class="ui-helper-clearfix tempAfter" (click)="checkedType(type.value)">
+                                                    <div class="dropAssetCls">
+                                                        {{type.label}}
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+                                        <button pButton type="button"
+                                            class="ui-button-secondary filter-btn"
+                                            data-toggle="collapse" data-target="#categoryFilter"
+                                            iconPos="right" label="{{'artifact-list.Filter' | translate }}"
+                                            icon="fas fa-filter">
+                                        </button>
+                                    </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="ui-g" style="justify-content: flex-end">
+                    <!--category filter-->
+                    <div id="categoryFilter" class="collapse category-panel">
+                        <div class="category-list filter-artifacts">
+                            <!-- <span class="unCheckedBox" (click)="removeAllFilter()">{{'artifact-list.UnCheckAll' | translate }}</span> -->
+                            <p-dataList [value]="artifactsSandbox.allCategories$ | async" [paginator]="false">
+                                <ng-template let-category let-index="index" pTemplate="item" class="captionBoxCategory">
+                                    <div class="row text-font-12">
+                                        <div class="col-lg-12">
+                                            <button type="button" class="category-toggle-btn" data-toggle="collapse" [attr.data-target]="'#categoryList-'+ index">
+                                                <!--<div class="ui-g-1 ui-sm-1 cat-dialog-cat-box-check">-->
+                                                <!--<p-checkbox value="{{category.categoryName}}" (onChange)="showSubCat($event, category.categoryName)"></p-checkbox>-->
+                                                <!--</div>-->
+                                                <span>{{category.categoryName}}</span>
+                                            </button>
+                                            <div id="categoryList-{{index}}" class="collapse">
+                                                <div class="subcategories-content">
+                                                    <div class="subcategories-list" *ngFor="let subcategory of category.listSubCategories; let i = index">
+                                                        <label class="category-checkbox">
+                                                            <input type="checkbox" name="{{category.categoryName+subcategory.categoryName}}" value="{{subcategory}}" id="checkBox-{{subcategory.catID}}-{{category.catID}}"
+                                                                (change)="updateCheckedOptions(category.categoryName+subcategory.categoryName, subcategory, $event)"
+                                                            /> {{subcategory.categoryName}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-dataList>
+                        </div>
+                        <div class="category-footer">
+
+                            <span class="unCheckedBox" (click)="removeAllFilter()">{{'artifact-list.UnCheckAll' | translate }}</span>
+                            <button pButton type="button" label="{{ 'artifact-list.CancelBtn' | translate }}" data-toggle="collapse" data-target="#categoryFilter"
+                                (click)="removeAllFilter()" class="ui-button-secondary button-style"> </button>
+                            <button pButton type="button" label="{{'artifact-list.SubmitBtn' | translate }}" class="button-style" (click)="showResult()"
+                                data-toggle="collapse" data-target="#categoryFilter"></button>
+                                
+
+                            <!--<button type="reset" class="ui-button-secondary set-left" pButton icon="fa-close" data-toggle="collapse" data-target="#categoryFilter" (click)="removeAllFilter()" label="Cancel"></button>-->
+                            <!--<button type="button" pButton icon="fa-check" (click)="showResult();" data-toggle="collapse" data-target="#categoryFilter" label="Submit"></button>-->
+                        </div>
+                    </div>
+                    <!--end category filter-->
+                </div>
+
+            </div>
+        </p-header>
+
+        <!-- AITRFACT GRID VIEW -->
+        <ng-template let-project pTemplate="gridItem" class="tempProj">
+            <div class="ui-g-12 ui-md-4 dv-grid-padding gridMarg">
+                <div class="grid-div mainGrid">
+                    <figure>
+                        <div class="figDiv">
+                            <span *ngIf="project.categoryName !== 'Smart Processes and Digital Integration'">{{project.categoryName}}</span>
+                            <span *ngIf="project.categoryName === 'Smart Processes and Digital Integration'">
+                                <abbr title="Smart Processes and Digital Integration">{{project.categoryName}}</abbr>
+                            </span>
+                        </div>
+                        <picture (click)="viewProject(project.projId, project.assetStatusId,project.isPublished);">
+                            <img class="imgCls" src="{{utilityService.getProjectImage(project.imageUrl, project.projectType)}}" alt="{{project.projectType}}"
+                                (error)="utilityService.imgErorHandler($event, 'project')" />
+                        </picture>
+                        <figcaption style="margin-top:-5%;">
+                            <p class="fds-c-text-body fdsAlign">
+                                {{project.ownerName}}
+                                <a [href]="'sip:' + project.ownerEmailID | safeUrl" pTooltip="Skype Chat" tooltipPosition="top">
+                                    <i class="fa fa-skype tc-color-blue" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                            <p class="fds-c-text-body fdsBody">{{project.projectName}}</p>
+                        </figcaption>
+                        <div class="profile">
+                                <img src="{{utilityService.getProjectImage(project.ownerImage, project.projectType)}}"/>
+                        </div>
+                    </figure>
+                    <div class="horizontal-line figAfter"></div>
+                    <div class="gird-footer-div footer-div">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-lg-3 widthRow rowData">
+                                <span pTooltip="{{ 'artifact-details.DownloadCountTooltip' | translate }}" tooltipPosition="left"  class="glyphicon glyphicon-download-alt  rowSpan"></span>
+                                <span class="footerlabel">{{project.downloadCount}}</span>
+                            </div>
+                            <div class="col-lg-3 widthRow rowDiv2">
+                                <span pTooltip="{{ 'artifact-details.ViewCountTooltip' | translate }}" tooltipPosition="left" class="fa fa-eye rowDiv2Span"> </span>
+                                <span class="footerlabel">{{project.viewCount}}</span>
+                            </div>
+                            <div class="col-lg-3 widthRow  rowData">
+                                <span pTooltip="{{ 'artifact-details.AvgRatingCountTooltip' | translate }}" tooltipPosition="left" class="fa fa-star rowSpan2"></span>
+                                <span class="footerlabel"> {{project.avgRating | number : '0.1-2'}}</span>
+                            </div>
+                            <div class="col-lg-3 widthRow"> 
+                                <span class="yammer-span" pTooltip="{{ 'artifact-details.ShareOnYammer' | translate }}" tooltipPosition="right"><img src="../../../../assets/images/yammer.png" class="yammer-btn" (click)="yammerWindowPopup(project.ownerName,project.projectName)"></span>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataScroller>
+    <div *ngIf="displayMessage" style="margin-left: 1%;padding-top: 3%;">
+        <span style="font-weight:bold;"> {{displayMessage}} </span>
+    </div>
+
+    <!-- ####### END: ARTIFACT ########-->
+
+    <!-- Added below div with style margin-bottom, because of fixed footer hiding contant -->
+    <div class="footer-dv-margin"></div>
+</div>
+</div>

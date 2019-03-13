@@ -1,0 +1,290 @@
+ui-accordion-header {
+    width: 500px
+  }
+  #inputbox{
+    width: 450px;
+    height: 40px;
+  }
+  .row categoryNameWrap{
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  .pull-right{
+    margin-left:1110px;
+    height:28px;
+    text-align:center;
+    width:109px;
+    margin-top:50px;
+  }
+  .row categoryNameWrap{
+    display: list-item;
+    list-style-type: disc;
+    margin-left: 15px;
+  }
+  .mini-layout.fluid .mini-layout-sidebar {
+    background-color: #eee;
+    width: 20%;
+    float: left;
+    min-height: 500px;
+    border-color: red;
+  }
+  .mini-layout.fluid .mini-layout-body {
+    background-color: #eee;
+    width: 77.5%;
+    margin-left: 2.0%;
+    float: left;
+    min-height: 500px;
+  }
+
+  .subcategory-details{
+  display: block;width: 100%;
+  }
+
+  .maincatTitle{
+    color:#42BEFF;
+    margin-right: 1%;
+    margin-top: 55px;
+  }
+  .mainCateTitle1{
+    white-space:nowrap;
+  }
+  .main-categorylist {
+    display: list-item;list-style-type: disc;margin-left: 15px;
+  }
+  .container-fluid{
+    padding-bottom:70px;
+    padding: 3%;
+  }
+  #newCategory{
+    width: 100%;
+    height: 40px;
+    padding: 0px 15px;
+  }
+  .removecategory-label{
+    display:inline-block;
+     max-width:100%;
+     margin-bottom:5px;
+     width:100%;
+  }
+  .error-container{
+    color:red ;
+    float:left
+  }
+  .select-dropdown{
+    width:600px;
+    height: 35px;
+	-webkit-appearance: menulist-button;
+  }
+  .subcategory-label{
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  .subcategory-checkbox{
+    margin-right:4px;
+    margin-top: inherit;
+  }
+  .btnUpdateCategory{
+    margin-right: 80px;
+  }
+  .success-container{
+    color:green;
+  }
+  .mainCatCancelBtn{
+    width: 11%;
+    padding-top: 6px;
+  }
+  .selectCategoryButton{
+    width: 11%;
+    padding-top: 6px;
+  }
+  .addSubCatButton{
+    width: 11%;
+    padding-top: 6px;
+  }
+  .form-group has-feedback col-xs-7 col-md-10{
+    white-space:nowrap;
+  }
+  .subcategories-header{
+    margin-top: 3%;
+  }
+  .subcategory-row{
+    margin-bottom:10px;
+    padding-left:0px;
+  }
+  .subcateogrydata-row{
+    margin-top: 3%;
+  }
+  .addSubCategoryGlypicon{
+    margin-left:-15px; /*-10px;*/
+  }
+  .glyphicon-plus-sign{
+    cursor:pointer;
+     color:#42BEFF;
+     border-color:#42BEFF;
+     font-size:20px;
+  }
+  .glyphicon-minus-sign{
+     padding-left:10px;
+     cursor:pointer;
+     color:#42BEFF;
+     border-color:#42BEFF;
+     font-size:20px;
+  }
+
+  .dialog-button-div{
+    text-align: right;
+  }
+
+  @media (min-width:294px) and (max-width:767px) {
+    .select-dropdown{
+      width: 65%;
+      margin-top: -3%;}
+
+    .container-fluid{
+      padding-bottom: 83%;
+      width: 90%;
+      margin-left: 25px;
+  }
+  #inputbox{
+    width: 100%;
+    height: 40px;
+  }
+  .glyphicon-plus-sign{
+     /* margin-left: 74%; */
+  }
+  .btnUpdateCategory{
+    margin-left: 60%;
+
+  }
+.pull-right{
+  height: 28px;
+  width: 109px;
+  margin-left: 28%;
+  }
+   #Maintitle{
+    margin-top: 53px;
+    margin-left: -10px;
+   }
+}
+@media (min-width:320px) and (max-width:568px) {
+  /* .addcatdialog-buttons{
+    margin-bottom: -22px!important;
+  } */
+  .maincatTitle{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+  #Maintitle{
+    margin-top: 77px;
+    margin-left: -10px;
+   }
+   .category-buttons{
+    margin-left:0px; /* 72%*/
+   }
+   .btnUpdateCategory {
+    margin-left: 47%;
+}
+.select-dropdown{
+  margin-left: 2%;
+}
+}
+
+@media (max-width: 667px) and (min-width: 375px){
+.btnUpdateCategory{
+    margin-left: 42%;
+}
+.select-dropdown {
+  margin-left: 2%;
+}
+}
+
+@media (max-width: 731px) and (min-width: 411px){
+.btnUpdateCategory{
+  margin-left: -32% !important;
+  margin-right: 4px !important;
+}
+}
+
+@media (min-width:768px) and (max-width:1024px) {
+  .maincatTitle{
+    margin-top: 70px;
+  }
+  .category-buttons {
+    margin-left:0px;  /* -95px !important;*/
+}
+  .select-dropdown{
+    margin-left: 2px;
+    width: 344px;
+}
+  .col-md-3 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;}
+  .subcategory-label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.subcategory-checkbox {
+  margin-right: 4px;
+  margin-top: inherit;
+}
+.btnUpdateCategory {
+  margin-right: 121px !important;
+}
+
+}
+@media (min-width:1024px) and (max-width:1366px) {
+  #Maintitle{
+    margin-top: 61px;
+   }
+   /* .col-lg-3 {
+    -ms-flex: 0 0 25% !important;
+    flex: 0 0 25%!important;
+    max-width: 25%!important;
+}
+/*
+.subcategory-label {
+  display: inline-block!important;
+  max-width: 100%!important;
+  margin-bottom: 5px!important;
+  font-weight: bold!important;
+}
+.subcategory-checkbox {
+margin-right: 4px!important;
+margin-top: inherit!important;
+} */
+}
+@media (min-width:600px) and (max-width:1024px) {
+  .col-md-3 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;}
+
+   .subcategory-label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.subcategory-checkbox {
+  margin-right: 4px;
+  margin-top: inherit;
+}
+
+.btnUpdateCategory {
+    margin-right: 167px;
+}
+.select-dropdown{
+  margin-left: 1px;
+} 
+.category-buttons{
+  margin-left:0px;/* -127px;*/
+}
+.addSubCategoryGlypicon{
+  margin-left:-15px;/* 69%;*/
+}
+}

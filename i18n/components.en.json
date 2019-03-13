@@ -1,0 +1,31 @@
+{
+  "Sidebar": {
+    "Menu": "Menu",
+    "CategoriesItem": "Categories",
+    "Home": "Home",
+    "AdminItem": "Admin"
+  },
+
+  "ProfileActionBar": {
+    "Logout": "Logout",
+    "Login": "Login"
+  },
+
+  "PageNotFound": {
+    "Title": "Ooops, Page Not Found",
+    "Subtitle": "Please, return to the previous page",
+    "Button": "Go back"
+  },
+  "Header":{
+    "Admin": "Admin",
+    "Search":"Search",
+    "NoSpecialCharactersAllowed": "No Special Characters allowed",
+    "SearchForProjectTags": "Search for project, tags etc...",
+    "CopyLink":"Copy link",
+    "Upload":"Upload",
+    "MyProfile":"My Profile",
+    "Logout":"Logout",
+    "Register":"Register",
+    "CopyUrlFromClipboard":"Copy URL to share"
+  }
+}

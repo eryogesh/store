@@ -1,0 +1,16 @@
+{
+    "Categories": {
+        "Registration": "Enregistrement",
+        "GrowingText": "Capstore s'aggrandit",
+        "TagFilter": {
+            "SelectProfile": "Choisissez un profil",
+            "ViewAll": "Voir tout",
+            "Sales": "Ventes",
+            "Delivery": "Livraison"
+        },
+        "TitleReusableAssets": "Actifs réutilisables",
+        "TitleActiveMembers": "Membres actifs",
+        "TitleWorkingHoursSaved": "Heures de travail enregistrées",
+        "TitleSavedOnProjectCost": "Enregistré sur le coût du projet"
+    }
+}

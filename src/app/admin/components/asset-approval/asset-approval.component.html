@@ -1,0 +1,83 @@
+<div class="mini-layout" style="padding-top: 6%;">
+  <div class="nav nav-tabs tabmob">
+    <div class="tableHeader row">
+      <span data-toggle="tab" class="col-lg-6 col-md-6 col-sm-6 recordHeader">{{ 'Admin.ApprovalRequests' | translate }} ({{assetApprovals.length}})</span>
+      <span class="col-md-4 col-sm-4 col-lg-4">
+        <form class="form-inline searchDisplay" action="/action_page.php">
+          <div class="profile-search pull-right ">
+            <div class="input-group emailSearch">
+              <input type="text" [(ngModel)]="emailAddress" name="owner" class="form-control" placeholder="{{ 'Admin.Owner' | translate }}"
+                >
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-default emailBtn" pTooltip="{{ 'Admin.Search' | translate }}" tooltipPosition="top"
+                  (click)="searchUser();">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+        </form>
+      </span>
+    </div>
+  </div>
+  <!-- <div class="error-container" *ngIf="assetApprovals.length == 0">
+    {{successMessage}}
+  </div> -->
+
+  <div *ngIf="assetApprovals.length > 0">
+    <p-table [value]="assetApprovals" [paginator]="true" [rows]="10" [responsive]="true">
+      <ng-template pTemplate="header">
+        <tr class="center">
+          <th> {{ 'Admin.AssetApproval.Type' | translate }} </th>
+          <th> {{ 'Admin.Name' | translate }} </th>
+          <th> {{ 'Admin.AssetApproval.LastUpdated' | translate }}</th>
+          <th>{{ 'Admin.Owner' | translate }} </th>
+          <th> {{ 'Admin.Category' | translate }}</th>
+          <th> {{ 'Admin.SubCategory' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-data>
+        <tr class="center" (click)="viewProjectDetails(data.projId,data.userID,data.isPublished);">
+
+          <td>
+            <img class="admin_profile-pic-border" src="{{utilityService.getProjectImage(data.imageUrl, data.projectType)}}" alt="{{data.projectType}}"
+              (error)="utilityService.imgErorHandler($event, 'project')" />
+          </td>
+
+          <td>
+            {{data.projectName}}
+          </td>
+
+          <td>
+            {{data.projectLastUpdate | amLocal | amDateFormat: 'YYYY-MM-DD'}}
+          </td>
+
+          <td class="ownername-td">
+            {{data.ownerName}}
+            <a [href]="'sip:' + data.ownerEmailID | safeUrl" pTooltip="{{ 'Admin.SkypeChat' | translate }}" tooltipPosition="top">
+              <i class="fa fa-skype tc-color-blue" aria-hidden="true"></i>
+            </a>
+          </td>
+
+          <td>
+            {{data.categoryName}}
+          </td>
+
+          <td>
+            {{data.subCategoryName}}
+          </td>
+
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="row" *ngIf="isSearchFound">
+    <div class="form-group col-lg-12 col-sm-12 col-md-12">
+      <div class="col-lg-12 col-sm-12 col-md-12">
+        <button class="btn btn-default  ui-button-secondary pull-right resetSearchButton" pButton type="reset" id="cancel" name="cancel"
+          (click)="resetSearch()">{{ 'CancelBtn' | translate }}</button>
+      </div>
+    </div>
+  </div>
+  <p-growl [style]="{'top':'100px'}"></p-growl>
+</div>

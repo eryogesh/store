@@ -1,0 +1,16 @@
+{
+    "Categories": {
+        "Registration": "Registration",
+        "GrowingText": "Capstore is growing",
+        "TagFilter": {
+            "SelectProfile": "Select Profile",
+            "ViewAll": "View All",
+            "Sales": "Sales",
+            "Delivery": "Delivery"
+        },
+        "TitleReusableAssets": "Reusable Assets",
+        "TitleActiveMembers": "Active Members",
+        "TitleWorkingHoursSaved": "Mobile Applications",
+        "TitleSavedOnProjectCost": "Saved on Project Cost"
+    }
+}

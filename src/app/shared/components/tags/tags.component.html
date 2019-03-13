@@ -1,0 +1,14 @@
+<tag-input [(ngModel)]='tags' 
+theme='bootstrap' 
+(onAdd)="onItemAdded($event)"  
+(onRemove)="onItemRemoved($event)" 
+maxItems="10" modelAsStrings=true 
+secondaryPlaceholder="{{ 'artifact-upload.SelectTagsPlaceholder' | translate }}"
+placeholder="{{ 'artifact-upload.SelectTagsPlaceholder' | translate }}"
+[errorMessages]="errorMessages"
+[validators]="validators"
+[addOnBlur]="true"
+[addOnPaste]="true" 
+[editable]="true"
+separatorKeys="[',']"
+></tag-input>

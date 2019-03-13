@@ -1,0 +1,28 @@
+{
+  "Sidebar": {
+    "Menu": "Menu",
+    "ProductsItem": "Proizvodi"
+  },
+
+  "ProfileActionBar": {
+    "Logout": "Odjava"
+  },
+
+  "PageNotFound": {
+    "Title": "Ooops, Stranica Nije Pronađena",
+    "Subtitle": "Molimo, vratite se na prethodnu stranicu",
+    "Button": "Povratak"
+  },
+  "Header":{
+    "Admin": "Administration",
+    "Search":"Chercher",
+    "NoSpecialCharactersAllowed": "Aucun caractère spécial autorisé",
+    "SearchForProjectTags": "Recherche de projet, tags etc...",
+    "CopyLink":"Copier le lien",
+    "Upload":"Télécharger",
+    "MyProfile":"Mon profil",
+    "Logout":"Connectez - Out",
+    "Register":"Enregistrer ",
+    "CopyUrlFromClipboard":"copier l'URL du presse-papiers"
+  }
+}

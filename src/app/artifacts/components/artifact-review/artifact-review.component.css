@@ -1,0 +1,75 @@
+.reviewerIcon {
+  width: 50px;
+  height: 50px;
+  max-height: 10.9235em;
+}
+.avatar {
+  width:50px;
+  height:50px;
+  border-radius:100%;
+  background-size:contain;
+  position:relative;
+  border: 1px solid #00a4ff;
+  padding: 2px;
+  background-color: white;
+  z-index:1;
+}
+.tc-color-blue {
+  color: #2399e5 !important;
+}
+
+.cursor-pointer {
+  cursor: pointer
+}
+.padding-3 {
+  padding: 3%;
+}
+.reviewContent {
+  margin-top: 5%;
+  font-size: 13px;
+  margin-left: -30px;
+}
+.reviewText {
+  word-wrap: break-word;
+  margin-left: 52px;
+  font-size: 13px;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 410px) {
+  .reviewerIcon {
+    width: 50px;
+    height: 50px;
+    margin-left: 40%;
+    margin-top: 5%;
+  }
+  .reviewContent {
+    margin-top: 5%;
+    font-size: 13px;
+    margin-left: 100px;
+  }
+}
+
+@media only screen and (min-device-width: 411px) and (max-device-width: 731px) {
+
+}
+
+
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+
+}
+
+.margin-left-18 {
+  margin-left: 18px
+}
+.margin-left-5 {
+  margin-left: 5px
+}
+.padding-top-20 {
+  padding-top: 20px;
+}
+.button-style {
+  border: 1px solid #ccc !important;
+  height: 25px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}

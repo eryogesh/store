@@ -1,0 +1,36 @@
+{
+  "api": {
+    "baseUrl": "https://capstore.fs.capgemini.com/capserviceorm/userservices",
+    "downloadUrl": "https://capstore.fs.capgemini.com",
+    "envUrl": "https://capstore.fs.capgemini.com:5000"
+  },
+
+  "paths": {
+    "imagesRoot": "/assets/images/",
+    "userImageFolder": "/assets/images/users/"
+  },
+
+  "localization": {
+    "languages": [
+      {"code": "en", "name": "EN", "culture": "en-EN"},
+      {"code": "fr", "name": "FR", "culture": "fr-FR"}
+    ],
+    "defaultLanguage": "en"
+  },
+
+  "notifications": {
+    "options": {
+      "timeOut": 5000,
+      "showProgressBar": true,
+      "pauseOnHover": true,
+      "position": ["top", "right"],
+      "theClass": "sy-notification"
+    },
+    "unauthorizedEndpoints": ["api/products"],
+    "notFoundEndpoints": ["api/products", "api/account/login", "api/account/register"]
+  },
+
+  "googleEnvAccountId":"UA-75976219-1",
+  "debugging": false,
+  "IsSSOEnabled": true
+}

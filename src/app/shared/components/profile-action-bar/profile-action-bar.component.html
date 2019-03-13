@@ -1,0 +1,12 @@
+<div class="profileActionBar">
+  <div class="profileActionBar-anchor">
+    <a class="profileActionBar-imgWrapper">
+      <img src="{{ userImage }}" alt="">
+    </a>
+    <span>{{ userEmail }} | </span>
+    <a routerLink="/account">
+      <span>{{ 'ProfileActionBar.Login' | translate }}</span>
+    </a>
+    <span (click)="logout.emit($event)" class="profileActionBar-logout">{{ 'ProfileActionBar.Logout' | translate }}</span>
+  </div>
+</div>

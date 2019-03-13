@@ -1,0 +1,182 @@
+<div class="no-padding pageLayout">
+  <div class="row">
+    <div class="col-lg-4 col-sm-12">
+      <div class="cross-sell__list">
+        <div class="cross-sell__list-item">
+          <div class="text-decoration-none">
+            <figure>
+              <picture>
+                <img class="img-fluid" alt="100%x250" src="assets\images\Homepage\bg.png" (error)="utilityService.imgErorHandler($event, 'project')"/>
+              </picture>
+              <div *ngIf="userDetails">
+                <div class="image-upload img-circle">
+                  <label for="file-input">
+                    <img class="userprofile-pic" pTooltip="{{'Profile.ChangeProfileImage' | translate }}" tooltipPosition="bottom" src="{{userDetails.profileImage}}"
+                      (error)="utilityService.imgErorHandler($event, 'user')" />
+                  </label>
+                  <input id="file-input"
+                         accept='image/*'
+                         (change)="changeUserProfileImage($event.target.files)" type="file" icon-model="usericon"
+                  />
+                </div>
+                <figcaption class="img-caption">
+                  <span class="username margin-top-20">{{userDetails.name}}</span>
+                  <div class="text-font-12-designation">
+                    <span> {{userDetails.designation}} | {{ 'Auth.Capgemini' | translate }} </span>
+                    <span pTooltip="{{'Profile.EditUserDetails' | translate }}" tooltipPosition="top" (click)="editProfilePopup = true" class="cursor-pointer">
+                      <i class="glyphicon glyphicon-pencil"></i>
+                    </span>
+                  </div>
+                  <button pButton icon="fa fa-list" iconPos="left"  data-toggle="collapse"
+                    id="btn-editPreference" data-target="#PreferenceList" (click)="personalizeHome()" class="fds-c-text-body height-28" label="{{'Profile.Title' | translate }}">
+                  </button>
+                  <div id="PreferenceList" class="collapse category-panel">
+                    <div class="category-list">
+                        <div *ngFor="let category of allCategories">
+                          <div class="category-toggle-btn text-font-12" (onClick)="checkEvent(category)">
+                                <input type="checkbox"
+                                       [(ngModel)]="category.isChecked"
+                                       name="{{category.categoryName}}"
+                                       value="{{category.categoryName}}"
+                                       id="{{category.categoryName}}"/>
+                                <label style="cursor: pointer" for="{{category.categoryName}}">{{category.categoryName}}</label>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="category-footer">
+                      <button pButton type="button" label="{{ 'CancelBtn' | translate }}" class="ui-button-secondary button-style" data-toggle="collapse" data-target="#PreferenceList"></button>
+                      <button pButton type="button" label="{{ 'Submit' | translate }}" class="button-style" pButton (click)="showCategoryResult();" data-toggle="collapse" data-target="#PreferenceList"></button>
+                    </div>
+                  </div>
+                </figcaption>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-12 col-sm-12">
+      <div>
+        <p-growl [value]="msgs" [style]="{'top':'100px'}"></p-growl>
+        <p-dataScroller [value]="artifactData" [rows]="12" (onLazyLoad)="loadData($event)" [lazy]="true" [totalRecords]="totalRecords">
+          <p-header>
+            <div class="ui-helper-clearfix  dv-header-box">
+              <div class="ui-g">
+                <p-dropdown [options]="assets" [(ngModel)]="selectedAsset" [style]="{'width':'150px'}">
+                  <ng-template let-asset pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height:25px;" (click)="checkedCategories(asset.label)">
+                      <div style="font-size:14px;float:left;margin-top:4px">{{asset.label}}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </div>
+            </div>
+          </p-header>
+
+          <!-- AITRFACT GRID VIEW -->
+          <ng-template let-project pTemplate="gridItem" class="tempProj">
+            <div class="ui-g-12 ui-md-4 dv-grid-padding gridMarg margin-top-20">
+              <div class="grid-div mainGrid">
+                <figure>
+                  <div class="figDiv">
+                    <span *ngIf="project.categoryName !== 'Smart Processes and Digital Integration'">{{project.categoryName}}</span>
+                    <span *ngIf="project.categoryName === 'Smart Processes and Digital Integration'">
+                      <abbr title="Smart Processes and Digital Integration">{{project.categoryName}}</abbr>
+                    </span>
+                  </div>
+                  <picture (click)="viewProject(project.projId, project.assetStatusId,project.isPublished);">
+                    <img class="imgCls" src="{{utilityService.getProjectImage(project.imageUrl, project.projectType)}}" alt="{{project.projectType}}"
+                      (error)="utilityService.imgErorHandler($event, 'project')" />
+                  </picture>
+                  <figcaption style="margin-top:-5%;">
+                    <p class="fds-c-text-body fdsAlign">
+                      {{project.ownerName}}
+                      <a [href]="'sip:' + project.ownerEmailID | safeUrl" pTooltip="{{ 'Auth.SkypeChat' | translate }}" tooltipPosition="top">
+                        <i class="fa fa-skype tc-color-blue" aria-hidden="true"></i>
+                      </a>
+                    </p>
+                    <p class="fds-c-text-body fdsBody">{{project.projectName}}
+                      <span *ngIf="displayArtifactStatus">
+                        <span class="glyphicon glyphicon glyphicon-ok-circle tc-color-green" pTooltip="{{ 'Profile.AssetApprove' | translate }}" tooltipPosition="top" *ngIf="project.assetStatusId == 'AP'"></span>
+                        <span class="glyphicon glyphicon glyphicon-ok-circle tc-color-yellow" pTooltip="{{ 'Profile.AssetSubmitted' | translate }}" tooltipPosition="top" *ngIf="project.assetStatusId == 'SU'"></span>
+                        <span class="glyphicon glyphicon glyphicon glyphicon-remove-circle tc-color-red" pTooltip="{{ 'Profile.AssetRejected' | translate }}" tooltipPosition="top"
+                          *ngIf="project.assetStatusId == 'RJ'"></span>
+                      </span>
+                    </p>
+
+
+                  </figcaption>
+                  <div class="profile">
+                                <img src="{{utilityService.getProjectImage(project.ownerImage, project.projectType)}}"/>
+                        </div>
+                </figure>
+                <div class="horizontal-line figAfter"></div>
+                <div class="gird-footer-div footer-div">
+                  <div class="row" style="width: 100%;">
+                    <div class="col-lg-3 widthRow rowData">
+                      <span  pTooltip="{{ 'Profile.DownloadCount' | translate }}" tooltipPosition="top" class="glyphicon glyphicon-download-alt  rowSpan"></span>
+                      <span style="color:black">{{project.downloadCount}}</span>
+                    </div>
+                    <div  pTooltip="{{ 'Profile.ViewCount' | translate }}" tooltipPosition="top" class="col-lg-3 widthRow rowDiv2">
+                      <span class="fa fa-eye rowDiv2Span"> </span>
+                      <span style="color:black">{{project.viewCount}}</span>
+                    </div>
+                    <div  pTooltip="{{ 'Profile.AvgRating' | translate }}" tooltipPosition="top" class="col-lg-3 widthRow rowData">
+                      <span class="fa fa-star rowSpan2"></span>
+                      <span style="color:black"> {{project.avgRating | number : '0.1-2'}}</span>
+                    </div>
+                    <div class="col-lg-3 widthRow"> 
+                      <span class="yammer-span" pTooltip="{{ 'artifact-details.ShareOnYammer' | translate }}" tooltipPosition="right"><img src="../../../../assets/images/yammer.png" class="yammer-btn" (click)="yammerWindowPopup(project.ownerName,project.projectName)"></span>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-dataScroller>
+        <div class="error-container" *ngIf="displayMessage">
+          <span> {{displayMessage}} </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ####### END:ARTIFACT ########-->
+
+<!-- ####### START: EDIT PROFILE POPUP ########-->
+<p-dialog [(visible)]="editProfilePopup" modal="modal" [style]="{'text-align':'left'}" [responsive]="true" [width]="600"
+  [minWidth]="200" dismissableMask="false" [closable]="false" [minY]="70">
+  <p-header>
+    Edit Profile
+  </p-header>
+  <form [formGroup]="userform" (ngSubmit)="editProfile()" autocomplete="off">
+    <div class="ui-grid-col-12">
+      <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['username'].valid&&userform.controls['username'].dirty">
+        <i class="fa fa-close"></i>{{ 'Profile.UserNameErrorMessage' | translate }}  </div>
+    </div>
+    <div class="ui-grid-row" style="padding-bottom: 3%;">
+      <div class="col-12 padL0">
+        <input class="col-12 height-35" pInputText type="text" formControlName="username" [(ngModel)]="userDetails.name" placeholder="{{ 'Profile.UserName' | translate }} "
+          autocomplete="off" maxlength="50" minlength="2" />
+      </div>
+    </div>
+    <div class="ui-grid-col-12">
+      <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['designation'].valid&&userform.controls['designation'].dirty">
+        <i class="fa fa-close"></i> {{ 'Profile.DesignationErrorMessage' | translate }}
+      </div>
+    </div>
+    <div class="ui-grid-row" style="padding-bottom: 3%;">
+      <div class="col-12 padL0">
+        <input class="col-12 height-35" pInputText type="text" formControlName="designation" [(ngModel)]="userDetails.designation"
+          placeholder="{{ 'Profile.designation' | translate }}" autocomplete="off" autocomplete="off" maxlength="50" minlength="2" />
+      </div>
+    </div>
+    <p-footer>
+      <button pButton type="button" class="ui-button-secondary" style="padding:2px;" label="{{ 'CancelBtn' | translate }}" (click)="cancelUpdate();"> </button>
+      <button pButton type="Submit" label="{{ 'Submit' | translate }}" style="padding:2px;" [disabled]="!userform.valid"></button>
+    </p-footer>
+  </form>
+
+</p-dialog>
+<!-- ####### STOP: EDIT PROFILE POPUP ########-->

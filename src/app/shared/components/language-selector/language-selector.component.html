@@ -1,0 +1,17 @@
+
+
+<!--<button (click)="onToggle()" class="language-selector-anchor" [ngClass]="{'active': show}"-->
+ <!--data-toggle="lang-dropdown">{{selectedLanguage}}<div class="log-arrow-up"></div>-->
+<!--<span class="caret"></span></button>-->
+
+<!--<div class="dropdown-pane top" style=" position: absolute" id="lang-dropdown" data-dropdown *ngIf="show">-->
+  <!--<span *ngFor="let lang of availableLanguages" (click)="selectLanguage(lang)">{{ lang.name }}<hr/></span>-->
+<!--</div>-->
+
+<div class="dropdown">
+  <a class="dropdown-toggle language-selector-anchor" (click)="onToggle()"data-toggle="dropdown">{{selectedLanguage}}
+  <span class="fa fa-chevron-down"></span></a>
+  <div class="dropdown-pane top" style=" position: absolute" id="lang-dropdown" data-dropdown *ngIf="show">
+    <span *ngFor="let lang of availableLanguages" (click)="selectLanguage(lang)">{{ lang.name }}<hr/></span>
+  </div>
+</div>

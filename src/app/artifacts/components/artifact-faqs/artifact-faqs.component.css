@@ -1,0 +1,133 @@
+.pageLayout {
+  padding-top: 10%;
+}
+.answerHeader {
+  font-size: 12px;
+}
+.answerBlock {
+  margin-top: 0px !important;
+  border-top: none !important;
+}
+.answerDiv {
+  width: 120%;
+}
+.formPadding {
+  padding: 3% 0% 0% 10%;
+}
+.height-35 {
+  height: 35px;
+}
+.font-15 {
+  font-size: 15px;
+}
+.queryBlock {
+  /*border-right:1px solid #A9A9A9;*/
+  float:left;
+  text-align: center;
+  padding: 5px;
+
+}
+.rowPadding {
+  border: 1px solid #c7c7c7;
+  background-color: white;
+  cursor: pointer;
+  margin-top: 5px;
+  box-shadow: 1px 1px 2px 0px #979898;
+}
+.rowPadding:hover {
+  background-color: #e9edf0 !important;
+}
+
+.queryText {
+  padding: 5px;
+}
+.margin-right-16 {
+  margin-right: 16px;
+}
+.margin-top-5 {
+  margin-top: 5px;
+}
+.margin-top-10 {
+  margin-top: 10px;
+}
+.margin-top-20 {
+  margin-top: 20px;
+}
+.margin-top-30 {
+  margin-top: 30px;
+}
+.tc-color-blue {
+  color:#2399e5 !important;
+}
+.word-wrap {
+  word-wrap: break-word;
+}
+.width-40 {
+  width: 40px;
+}
+.answerContent {
+  overflow-wrap: break-word;
+  word-break: break-all;overflow:auto;height:auto;width:71% !important;
+}
+.padding-10 {
+  padding: 10px;
+}
+.height-35 {
+  height:35px
+}
+.padding-top-5 {
+  padding-top: 5%;
+}
+.padding-top-10 {
+  padding-top: 10%;
+}
+.profile-img {
+  width: 25%;
+  padding: 5px;
+  height: 115%;
+  border-radius: 30px;
+}
+.postDate, .ansDate {
+  color: #908e8e;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+@media only screen and (min-device-width: 750px) and (max-device-width: 1023px) {
+  .postDate {
+    margin-left: -60px !important;
+  }
+  .ansDate {
+    margin-left: -45px !important;
+  }
+}
+
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 410px) {
+  .pageLayout {
+    padding-top: 20%;
+  }
+}
+
+@media only screen and (min-device-width: 411px) and (max-device-width: 850px) {
+  .pageLayout {
+    padding-top: 20%;
+  }
+}
+
+
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1166px) {
+  .pageLayout {
+    padding-top: 15%;
+  }
+}
+
+.tc-color-red {
+  color: red;
+}
+.button-style {
+  border: 1px solid #ccc !important;
+  height: 28px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}

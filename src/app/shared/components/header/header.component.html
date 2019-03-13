@@ -1,0 +1,140 @@
+<nav class="navbar navbar-expand-md bg-white navbar-white row navHeader">
+  <p-messages id="httpError" [(value)]="httpResponseHandlerService.msgs"></p-messages>
+  <div class="d-md-none d-lg-block col-lg-2" >
+    <!-- Brand -->
+    <a routerLink="/artifacts/artifact-list" class="navbar-brand removePaddingTopBottom">
+      <img (click)="redirect()" alt="Brand" src="../../assets/images/newLogo_SM.png">
+    </a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button id="collapsNavbar" class="navbar-toggler collapseButtonDisplaySM" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon fa fa-align-justify collapseButtonDisplay"></span>
+    </button>
+  </div>
+
+  <div class="d-none d-md-block d-lg-none col-md-1 brand-md-logo">
+    <a routerLink="/artifacts/artifact-list" class="navbar-brand removePaddingTopBottom">
+      <img (click)="redirect()" alt="Brand" src="../../assets/images/capstore_icon.png">
+    </a>
+  </div>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse col-sm-12 col-md-10 col-lg-10" style="margin-right: -150px;" id="collapsibleNavbar">
+    <ul class="navbar-nav row width-100">
+      <li class="nav-item col-sm-12 col-md-1 col-lg-2">
+        <ul *ngIf="utilityService.isAdmin$ | async" class="nav navbar-nav">
+          <li class="dropdown adminBtn">
+            <a class="dropdown-toggle admin-drop-down" data-toggle="dropdown">
+              {{'Header.Admin' | translate  |  truncate:[5] }}
+              <i class="fa fa-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu admin-drop-down-menu" ng-model="userType" name="typeUser">
+              <li class="borderTopMyProfile" [ngClass]="{'active': selectedItem == type}" (click)="selectName($event,type);" *ngFor="let type of userType">
+                {{type.userType}}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item col-sm-12 col-md-5 col-lg-5">
+        <form class="form-inline searchDisplay" action="/action_page.php">
+      <div class="input-group searchGroup">
+        <div class="input-group-prepend">
+          <button type="submit" class="btn btn-outline-secondary btn-sm search-nav-margin search-btn" (click)="searchAsset(searchString)">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+      <input type="search" autocomplete="off" class="form-control search-input searchInputNew" id="search" name="search" value="" [(ngModel)]="searchString" (keyup)="valid(searchString)" (blur)="valid(searchString)"
+           pTooltip=" {{'Header.NoSpecialCharactersAllowed' | translate }}" tooltipPosition="left" placeholder="{{'Header.SearchForProjectTags' | translate }}" required 
+           (keyup)="getSearchDataOnKeyUp($event, searchString)" (keypress)="onKeyPressInSearch($event)" (keydown)="removeTagOnBackspace($event,searchString)" (keypress)="ifEnterPressed($event,searchString)">
+      <div class="search-result-data" 
+        *ngIf="showResults==true && 
+                resultData != undefined && 
+                resultData.data.length && 
+                searchString != undefined && searchString.length > 2">
+	      <ul>
+          <ng-container *ngFor="let resultSearch of resultData.data; let i = index">
+			      <li (click)="searchForSelectedItem($event,resultSearch);resultData = null"  *ngIf="i<10">{{resultSearch}}</li>		    
+        </ng-container>
+        </ul>
+      </div>
+      </div>
+          <button [disabled]="!searchString" class="btn btn-outline-secondary btn-sm search-nav-margin copy-btn" (mouseover)="showTitle();"
+            id="btnCopy" data-content="copied to clipboard" data-toggle="popover" pTooltip="{{'Header.CopyLink' | translate }}" tooltipPosition="right"  (click)="copyToClipboard()">
+            <i class="fa fa-share-alt"></i>
+          </button>
+        </form>
+      </li>
+      <li class="nav-item col-sm-12 col-md-2 col-lg-2">
+         <a class="btn btn-primary btn-sm uploadBtn" [routerLink]="['./artifacts/artifact-upload']" *ngIf="utilityService.isLoggedIn$ | async">
+          <span class="fa fa-cloud-upload fa-lg"></span>{{'Header.Upload' | translate }}
+        </a>
+      </li>
+      <li class="nav-item col-sm-12 col-md-3 col-lg-2 profileAnchor" *ngIf="utilityService.isLoggedIn$ | async">
+        <a data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">
+    <span class="username" pTooltip="{{utilityService.titleName$ | async}}" tooltipPosition="top">{{utilityService.userName$ | async}}</span>
+          <span class="profile-ava">
+            <img class="imgWidthHeight" alt="user" src="{{utilityService.profileImage$ | async}}" (error)="utilityService.imgErorHandler($event, 'user')">
+          </span>
+          <b class="fa"></b>
+        </a>
+        <ul class="dropdown-menu extended logout regUlHead">
+          <div class="log-arrow-up"></div>
+          <li class="eborder-top regBtn ">
+            <a [routerLink]="['./account/user-profile']" class="regBtnText">
+              <i class="icon_profile"></i>{{'Header.MyProfile' | translate }} </a>
+          </li>
+          <li class="eborder-top regBtn borderTopMyProfile" (click)="logOut()" *ngIf="!(utilityService.getIsSSOEnabled())">
+            <a class="regBtnText">
+              <i class="icon_profile"></i> {{'Header.Logout' | translate }}</a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item col-sm-12 col-md-3 col-lg-2 regLink" *ngIf="!(utilityService.isLoggedIn$ | async)">
+        <span class="regUserWrapper" (click)="registration()">
+        <a aria-expanded="false" class="registerUser">
+          <span> {{'Header.Register' | translate }}</span>
+        </a>
+      </span>
+      </li>
+      <li class="nav-item col-lg-1 col-md-1 col-sm-12 langDropDown cursor-pointer">
+        <div>
+          <cs-language-selector
+            (select)="selectLanguage.emit($event)"
+            [selectedLanguage]="selectedLanguage"
+            [availableLanguages]="availableLanguages">
+          </cs-language-selector>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+
+
+</nav>
+
+<p-dialog [width]="500" [modal]="true" header="Login" [(visible)]="display">
+  <cs-login></cs-login>
+</p-dialog>
+<p-dialog [width]="500" [modal]="true" header="Registration" [responsive]="true" [(visible)]="utilityService.isRegister$">
+  <cs-signup></cs-signup>
+</p-dialog>
+
+<p-dialog [(visible)]="copyClipboardUrlPopup" modal="modal" [style]="{'text-align':'left','top':'250px'}" [responsive]="true" [width]="600">
+  <p-header>
+    {{'Header.CopyUrlFromClipboard' | translate }}
+  </p-header>
+  <input [(ngModel)]="copyClipboardUrl" autofocus type="text" name="url" class="height-35 width-100">
+</p-dialog>
+
+<!-- Confirmation Dialog to show empty string message -->
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <div class="dialog-btn">
+      <button type="button" pButton label="Ok" (click)="cd.reject()"></button>
+    </div>
+  </p-footer>
+</p-confirmDialog>
+

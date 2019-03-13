@@ -1,0 +1,291 @@
+
+
+<div class="no-padding pageLayout">
+  <div class="row">
+    <div class="col-lg-4 col-sm-12 margin-left-10">
+      <div class="cross-sell__list">
+        <div class="cross-sell__list-item">
+          <div class="text-decoration-none">
+            <figure>
+              <div class="cross-sell-figure">{{selectedArtifactData.categoryName}}
+              </div>
+              <picture>
+                <img class="imagedetails" src="{{selectedArtifactData.imageUrl}}"  (error)="utilityService.imgErorHandler($event, 'project')"
+                     alt="{{selectedArtifactData.projectType}}">
+              </picture>
+              <div class="row img-fluid">
+                <img src="{{selectedArtifactData.ownerImage}}" (error)="utilityService.imgErorHandler($event, 'user')" class="avatar">
+              </div>
+
+              <figcaption class="img-caption">
+                <p class="fds-c-text-body margin-top-20">
+                  <span>{{selectedArtifactData.ownerName}}
+                    <a [href]="'sip:' + selectedArtifactData.ownerEmailID | safeUrl" pTooltip="{{ 'artifact-details.SkypeTooltip' | translate }}" tooltipPosition="right" style="margin-left: -50%;">
+                      <i class="fa fa-skype tc-color-blue skypeCall" aria-hidden="true"></i>
+                    </a>
+                  </span>
+                </p>
+                <p class="fds-c-text-body projectdetails">{{selectedArtifactData.projectName}} </p>
+                <div class="btnContainer">
+                    <button pButton icon="fa fa-download" label="{{ 'artifact-details.DownloadButton' | translate }}" class="height-28 roundCorner" (click)="downloadArtifactPopup()"></button>
+                    <button pButton label="{{ 'artifact-details.FaqButton' | translate }}" class="height-28 roundCorner" [routerLink]="['/artifacts/artifact-faqs/' + selectedArtifactData.userID + '/' + selectedProjectId]"></button>
+                    <button pButton pTooltip="{{ 'artifact-details.CopyUrlTooltip' | translate }}" tooltipPosition="right" icon="fa fa-share-alt" class="height-28-tm" (click)="copyToClipboard(true)"></button>
+                    <!-- <button pButton  label="yammer" class="height-28" (click)="yammerWindowPopup()"></button> -->
+                    <span class="yammer-span" pTooltip="{{ 'artifact-details.ShareOnYammer' | translate }}" tooltipPosition="right"><img src="../../../../assets/images/yammer.png" class="yammer-btn" (click)="yammerWindowPopup()"></span>
+                  </div>
+                <p class="fds-c-text-body margin-top-5 projectIco">
+                   <span class="margin-left-7" pTooltip="{{ 'artifact-details.EffortsTooltip' | translate }}" tooltipPosition="left">
+                      <i class="fa fa-clock-o" aria-hidden="true"></i>
+                      {{selectedArtifactData.effortsInvested}} {{ 'artifact-details.EffortsMeasure' | translate }}
+                   </span>
+                  <span class="margin-left-3" pTooltip="{{ 'artifact-details.DownloadCountTooltip' | translate }}" tooltipPosition="left">
+                    &nbsp;<i class="fa fa-download" aria-hidden="true"></i>
+                      {{selectedArtifactData.downloadCount}}
+                  </span>
+                  <span class="margin-left-3" pTooltip="{{ 'artifact-details.ViewCountTooltip' | translate }}" tooltipPosition="right">
+                    &nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+                      {{selectedArtifactData.viewCount}}
+                  </span>
+                  <span class="margin-left-3" pTooltip="{{ 'artifact-details.AvgRatingCountTooltip' | translate }}" tooltipPosition="right">
+                    &nbsp;<span class="glyphicon glyphicon-star"></span>
+                    {{selectedArtifactData.avgRating | number : '0.1-2'}}
+                  </span>
+                  <span class="margin-left-3 cursor-pointer" ng-show="selectedArtifactData.assetStatusId!=='SU' && selectedArtifactData.assetStatusId!=='RJ'" (click)="setFavorite();">
+                    <i pTooltip="{{ 'artifact-details.AddFavoriteTooltip' | translate }}" tooltipPosition="right"  class="tc-color-blue" *ngIf="isFavorite === 0" class="tc-color-blue glyphicon glyphicon-heart-empty" aria-hidden="true"></i>
+                    <i pTooltip="{{ 'artifact-details.FavoriteTooltip' | translate }}" tooltipPosition="right"  class="tc-color-blue" *ngIf="isFavorite === 1" class="tc-color-blue glyphicon glyphicon-heart" aria-hidden="true"></i>
+                  </span>
+                </p>
+                <p class="margin-top-20">
+                  <small><b>{{ 'artifact-details.Sub-Category' | translate }}: </b>{{selectedArtifactData.subCategoryName}}</small>
+                </p>
+                <p class="margin-top-2 tags">
+                  <small><b>{{ 'artifact-details.Tags' | translate }}: </b>
+                    <span *ngIf="tagsEdit;then editTags else showTags" class="tagsSmall"></span>
+                    <ng-template #editTags>
+                      <input type="text" class="width-70" [(ngModel)]="selectedArtifactData.tags" name="tags" max-length="50" min-length="2">
+                    </ng-template>
+                    <ng-template #showTags>{{selectedArtifactData.tags}}</ng-template>
+                  </small>
+                  <span [hidden]="!hideNewVersionTemplate">
+                    <span class="tc-color-blue margin-left-20 cursor-pointer" *ngIf="loggedInUserDetails && selectedArtifactData.ownerName===loggedInUserDetails.name"
+                          (click)="tagsEdit = true; isEditBtn = true">
+                      <i *ngIf="!tagsEdit" pTooltip="{{ 'artifact-details.EditTagsTooltip' | translate }}" tooltipPosition="top" class="fa fa-pencil" aria-hidden="true"></i>
+                    </span>
+                    <i *ngIf="tagsEdit" pTooltip="{{ 'artifact-details.SubmitButton' | translate }}" tooltipPosition="top" (click)="updateArtifactDetails(); tagsEdit = false" class="fa fa-check tc-color-blue" aria-hidden="true"></i>
+                    <i *ngIf="tagsEdit" pTooltip="{{ 'artifact-details.CancelButton' | translate }}" tooltipPosition="top" (click)="cancelUpdate(); tagsEdit = false" class="fa fa-times tc-color-red" aria-hidden="true"></i>
+                  </span>
+                </p>
+                <p class="margin-top-2 clearfix">
+                  <small><b>{{ 'artifact-details.File-Type' | translate }}: </b>{{fileType}} <br/>
+                    <span *ngIf="fileType == 'PLIST' || fileType == 'plist'">
+                      <b>({{ 'artifact-details.plistDownloadMessage' | translate }})</b>
+                    </span>
+                  </small>
+                </p>
+                <p class="margin-top-2">
+                  <small><b>{{ 'artifact-details.Size' | translate }}: </b>{{projectDataSize | number : '0.1-2'}} {{ 'artifact-details.AssetSizeMeasure' | translate }}</small>
+                </p>
+                <p class="margin-top-2">
+                  <small>
+                    <b>{{ 'artifact-details.Last-Modified' | translate }}: </b>{{selectedArtifactData.projectLastUpdate | amLocal | amDateFormat: 'DD-MM-YY'}}
+                  </small>
+                </p>
+              </figcaption>
+              <div class="divider-line margin-top-2"></div>
+              <p class="margin-top-2 padding-2 ver">
+                <small>
+                  <b>{{ 'artifact-details.Version' | translate }}: </b>{{selectedArtifactData.versionName}}
+                  <a class="cursor-pointer tc-color-blue" style="margin-left: 15px" *ngIf="loggedInUserDetails && selectedArtifactData.ownerName===loggedInUserDetails.name" pTooltip="{{ 'artifact-details.AddNewVersionTooltip' | translate }}" tooltipPosition="top" (click)="goToNewUpload()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                </small>
+                <small style="float: right;" *ngIf="hideNewVersionTemplate">
+                  <span pTooltip="{{ 'artifact-details.OtherVersionDetailsTooltip' | translate }}" tooltipPosition="top" *ngIf="projectArray.length > 1" class="cursor-pointer tc-color-blue" (click)="goVersionDetails(projectArray[0])"><b>{{ 'artifact-details.Version' | translate }} {{projectArray[0].versionName}} </b></span>
+                </small>
+              </p>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8 col-sm-12 dataSecondRow" *ngIf="selectedArtifactData.projectName">
+      <div class="row">
+        <h6><b>{{ 'artifact-details.Description' | translate }}</b></h6><br/>
+        <div class="row margin-left-20" [hidden]="!hideNewVersionTemplate">
+          <span class="tc-color-blue cursor-pointer" *ngIf="loggedInUserDetails && selectedArtifactData.ownerName===loggedInUserDetails.name"
+                (click)="descriptionEdit = true; isEditBtn = true">
+            <i *ngIf="!descriptionEdit" pTooltip="{{ 'artifact-details.EditDescriptionTooltip' | translate }}" tooltipPosition="right" class="fa fa-pencil" aria-hidden="true"></i>
+          </span>
+          <i *ngIf="descriptionEdit" pTooltip="{{ 'artifact-details.SubmitButton' | translate }}" tooltipPosition="left" (click)="updateArtifactDetails(); descriptionEdit = false" class="fa fa-check tc-color-blue" aria-hidden="true"></i>
+          <i *ngIf="descriptionEdit" pTooltip="{{ 'artifact-details.CancelButton' | translate }}" tooltipPosition="right" (click)="cancelUpdate(); descriptionEdit = false" class="fa fa-times tc-color-red margin-left-5" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="row margin-top-2">
+        <span *ngIf="descriptionEdit;then editDesc else showDesc"></span>
+        <ng-template #editDesc>
+          <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="description"></app-ngx-editor>
+        </ng-template>
+        <ng-template #showDesc>
+          <div [innerHTML]="description | sanitizeHtml"></div>
+        </ng-template>
+      </div>
+      <div class="tab-row">
+        <!--Display Tabs-->
+        <p-tabView #artifactTabs (onChange)="onReviewTabEvent($event)" [activeIndex]="tabIndex">
+          <!--key features tab-->
+          <p-tabPanel header="{{ 'artifact-details.Features' | translate }}">
+            <span class="text-font-14">
+              <ul>
+                <span style="display: inline-flex;">
+                 <div [hidden]="!hideNewVersionTemplate">
+                    <span class="tc-color-blue cursor-pointer margin-left-10" *ngIf="loggedInUserDetails && selectedArtifactData.ownerName===loggedInUserDetails.name"
+                          (click)="featuresEdit = true; isEditBtn = true">
+                      <i *ngIf="!featuresEdit" pTooltip="{{ 'artifact-details.EditFeaturesTooltip' | translate }}" tooltipPosition="right" class="fa fa-pencil" aria-hidden="true"></i>
+                    </span>
+                    <i *ngIf="featuresEdit" pTooltip="{{ 'artifact-details.SubmitButton' | translate }}" tooltipPosition="left" (click)="updateArtifactDetails(); featuresEdit = false" class="fa fa-check tc-color-blue" aria-hidden="true"></i>
+                    <i *ngIf="featuresEdit" pTooltip="{{ 'artifact-details.CancelButton' | translate }}" tooltipPosition="right" (click)="cancelUpdate(); featuresEdit = false" class="fa fa-times tc-color-red" aria-hidden="true"></i>
+                 </div>
+                </span>
+                <span *ngIf = "featuresEdit;then editFeatures else showFeatures"></span>
+                  <ng-template #editFeatures>
+                    <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="features"></app-ngx-editor>
+                  </ng-template>
+                  <ng-template #showFeatures>
+                    <div [innerHTML]="features | sanitizeHtml"></div>
+                  </ng-template>
+              </ul>
+            </span>
+          </p-tabPanel>
+
+          <!--review tab-->
+          <p-tabPanel header="{{ 'artifact-details.Reviews' | translate }}">
+            <div *ngIf="displayReview">
+              <cs-artifact-review [artifactData]="selectedArtifactData"
+                                  [hideNewVersionTemplate]="hideNewVersionTemplate"
+                                  [userDetails]="loggedInUserDetails"
+                                  (ratingChange)='ngOnInit()'>
+              </cs-artifact-review>
+            </div>
+          </p-tabPanel>
+
+          <!--Related Artifact Tab-->
+          <p-tabPanel header="{{ 'artifact-details.RelatedArtifact' | translate }}">
+            <div *ngIf="displayRelatedArtifacts">
+              <cs-artifact-related [artifactData]="selectedArtifactData" [userDetails]="loggedInUserDetails" (relatedChange)='relatedArtifactLoad = true; tabIndex=0'>
+              </cs-artifact-related>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+
+  <div class="row margin-top-20">
+    <div class="col-lg-12">
+      <span class="contentHeader" *ngIf="!isSupportFiles">{{ 'artifact-details.NoSupportingFiles' | translate }}</span>
+      <span class="contentHeader" *ngIf="isSupportFiles">{{ 'artifact-details.SupportingFiles' | translate }}</span>
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 cover-container support-block" *ngIf="isSupportFiles">
+        <div class="supportive-item" *ngFor="let supportingImage of supportingFile ">
+          <div class="cursor-pointer padding-0">
+            <img src="{{supportingImage.assetSupportFileName}}" class="supportive-img">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row padding-top-2" *ngIf="isZipContent">
+    <div class="col-lg-12">
+      <span class="contentHeader">{{ 'artifact-details.ZipContent' | translate }}</span>
+      <p-panel [toggleable]="true">
+        <p-header>
+        </p-header>
+        <div class="row zipContent zipContentBlock" *ngFor="let zip of zipContent; let i = index">
+          <div class="col-lg-8 col-xs-8 col-md-8">
+            <div [ngClass]="{'zipChildFolder': zip.ischild, 'zipParentFolder': !zip.ischild}">
+              <i [hidden]="!zip.isFolder" class="glyphicon glyphicon-folder-open"></i>
+              <span class="word-wrap"> {{zip.name}}</span>
+            </div>
+          </div>
+          <div class="col-lg-4 col-xs-4 col-md-4">
+            <p class="text-font-12 tc-color-grey">&nbsp;&nbsp;{{zip.date | date : 'yyyy-MM-dd'}}</p>
+          </div>
+        </div>
+        <p-footer>
+        </p-footer>
+      </p-panel>
+    </div>
+  </div>
+  <p-growl [style]="{'top':'100px'}"></p-growl>
+</div>
+
+<!-- ####### START: DOWNLOAD PROJECT POPUP ########-->
+<p-dialog [(visible)]="downloadProjectPopup" modal="modal" [style]="{'text-align':'left'}" [responsive]="true" [width]="600"
+          [minWidth]="200"  [minY]="70">
+  <p-header>
+    {{ 'artifact-details.DownloadPopupHeader' | translate }}
+  </p-header>
+  <form #downloadForm="ngForm" (ngSubmit)="downloadArtifact()">
+    <div class="form-group">
+      <label>{{ 'artifact-details.DownloadOptionsTitle' | translate }} </label>
+      <label class="radio-inline">
+        <input type="radio" value="project" [(ngModel)]="downloadArtifactDetails.downloadOption" name="optradio">
+        {{ 'artifact-details.DownloadOption-Project' | translate }}
+      </label>
+      <label class="radio-inline">
+        <input type="radio" value="rfp" [(ngModel)]="downloadArtifactDetails.downloadOption" name="rfp">
+        {{ 'artifact-details.DownloadOption-RFP' | translate }}
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label *ngIf="downloadArtifactDetails.downloadOption == 'project'">{{ 'artifact-details.DownloadProjectName' | translate }}</label>
+      <label *ngIf="downloadArtifactDetails.downloadOption == 'rfp'">{{ 'artifact-details.DownloadProjectClientName' | translate }}</label>
+      <input [(ngModel)]="downloadArtifactDetails.projectName" name="projectName" type="text" class="form-control height-35"
+             required>
+    </div>
+
+    <div class="form-group">
+      <label *ngIf="downloadArtifactDetails.downloadOption == 'project'">{{ 'artifact-details.DownloadProjectId' | translate }}</label>
+      <label *ngIf="downloadArtifactDetails.downloadOption == 'rfp'">{{ 'artifact-details.DownloadProjectSpadeId' | translate }}</label>
+      <input [(ngModel)]="downloadArtifactDetails.projectId" name="projectId" type="text" class="form-control height-35"
+             required>
+    </div>
+
+    <div class="form-group">
+      <label>{{ 'artifact-details.DownloadProjectEfforts' | translate }}</label>
+      <input [(ngModel)]="downloadArtifactDetails.efforts" name="efforts" type="number" class="form-control height-35"
+             required>
+    </div>
+
+    <p-footer>
+      <button pButton type="button" label="{{ 'artifact-details.CancelButton' | translate }}" (click)="downloadProjectPopup = false" class="ui-button-secondary button-style"> </button>
+      <button pButton type="Submit" label="{{ 'artifact-details.SubmitButton' | translate }}" class="button-style" [disabled]="!downloadForm.valid"></button>
+    </p-footer>
+  </form>
+</p-dialog>
+<!-- ####### STOP: DOWNLOAD PROJECT POPUP ########-->
+
+<p-dialog [(visible)]="copyArtifactUrlPopup" modal="modal" [style]="{'text-align':'left'}" [responsive]="true" [width]="600"
+          [minWidth]="200" [minY]="70">
+  <p-header>
+    {{ 'artifact-details.CopyUrlPopupHeader' | translate }}
+  </p-header>
+  <input [(ngModel)]="copyArtifactUrl" type="text" name="url" class="height-35 width-100">
+</p-dialog>
+
+
+<p-confirmDialog header=" {{ 'artifact-details.UserNotAuthorisedMessage' | translate }}" width="425" closable="false" #cd>
+  <p-footer>
+    <button type="button" pButton icon="fa-check" label="ok" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<p-dialog [(visible)]="PopupBlockerDisablePopup" modal="modal" [style]="{'text-align':'left'}" [responsive]="true" [width]="600"
+          [minWidth]="200" [minY]="100">
+  <p-header>
+    <span> Popup Blocker Warning </span>
+    </p-header>
+    <span><strong> Please disable your pop-up blocker and click the Download link again.</strong> </span>
+
+
+</p-dialog>

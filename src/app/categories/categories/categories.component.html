@@ -1,0 +1,259 @@
+<div ng-init="init()" class="bgCapstoreCategory">
+  <div class="row margin-bottom-10-category">
+  </div>
+  <select class="select-dropdown" (change)="setUSerProfile($event.target.value)">
+      <option value="">{{ 'Categories.TagFilter.SelectProfile' | translate }}</option>
+      <option value="">{{ 'Categories.TagFilter.ViewAll' | translate }}</option>
+      <option value="SL">{{ 'Categories.TagFilter.Sales' | translate }}</option>
+      <option value="DY">{{ 'Categories.TagFilter.Delivery' | translate }}</option>
+  </select>
+  <div class="row catRow" >
+
+    <div class="col-lg-10 col-md-10 categoryBox">
+      <div class="row ">
+        <div class="col-lg-1 col-md-1"></div>
+        <div class="col-12 d-block d-sm-block d-md-none dispCtgSm" *ngFor="let item of imageTopList" (click)="gotoHomePage(item.categoryid)">
+          <div class="row margin-rt-15-per">
+            <div class="col-2">
+              <div>
+                <img src="../../assets/images/login/{{item.imageName}}" id="{{item.categoryid.catID}}" ng-mouseover="mouserOver($index);"
+                ng-mouseleave="mouseOut($index);" class="img-responsive categoryListImgWidhtHeight">
+              </div>
+            </div>
+            <div class="col-10 margin-top-2-per">
+              <b class="brkWord">{{item.title}}</b>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-2 col-md-2 text-align-center d-none d-md-block margin-top-2-per" *ngFor="let item of imageTopList" (click)="gotoHomePage(item.categoryid)">
+          <div>
+            <img src="../../assets/images/login/{{item.imageName}}" id="{{item.categoryid.catID}}" ng-mouseover="mouserOver($index);"
+              ng-mouseleave="mouseOut($index);" class="img-responsive categoryListImgWidhtHeight">
+          </div>
+          <div class="marginTopFive">
+            <b>{{item.title}}</b>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md1"></div>
+      </div>
+      <div class="row form-inline form-group categoryItem">
+        <div class="col-lg-1 col-md-1"></div>
+
+        <div class="col-12 d-block d-sm-block d-md-none dispCtgSm"  *ngFor="let item of BottomList" (click)="gotoHomePage(item.categoryid)">
+            <div class="row margin-rt-15-per">
+              <div class="col-2" >
+                <div>
+                  <img src="../../assets/images/login/{{item.imageName}}" id="{{item.categoryid.catID}}" ng-mouseover="mouserOver($index);"
+                  ng-mouseleave="mouseOut($index);" class="img-responsive categoryListImgWidhtHeight">
+                </div>
+              </div>
+              <div class="col-10 margin-top-2-per">
+                <b class="brkWord">{{item.title}}</b>
+              </div>
+            </div>
+          </div>
+
+
+
+        <div class="col-lg-2 col-md-2  d-none d-md-block text-align-center margin-top-2-per" *ngFor="let item of BottomList" (click)="gotoHomePage(item.categoryid)">
+          <div>
+            <img src="../../assets/images/login/{{item.imageName}}" id="{{item.categoryid.catID}}" ng-mouseover="mouserOver($index);"
+              ng-mouseleave="mouseOut($index);" class="img-responsive categoryListImgWidhtHeight">
+          </div>
+          <div class="marginTopFive">
+            <b>{{item.title}}</b>
+          </div>
+        </div>
+        <div class="col-lg-1"></div>
+      </div>
+    </div>
+    <div class="col-lg-1"></div>
+  </div>
+  <!-- <div class="categoryBox">
+    <div class="row form-inline">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10">
+        <div class="row form-group categoryItem" >
+          <div class="col-lg-1"></div>
+          <div class="col-lg-2 text-align-center"  *ngFor="let item of imageTopList" (click)="gotoHomePage(item.categoryid)">
+            <div>
+              <img src="../../assets/images/login/{{item.imageName}}" id="{{item.categoryid.catID}}" ng-mouseover="mouserOver($index);"
+                ng-mouseleave="mouseOut($index);" class="img-responsive categoryListImgWidhtHeight">
+            </div>
+            <div class="marginTopFive">
+              <b>{{item.title}}</b>
+            </div>
+          </div>
+          <div class="col-lg-1"></div>
+        </div>
+      </div>
+      <div class="col-lg-1"></div>
+    </div>
+    <div class="row form-inline">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10">
+        <div class="row form-group categoryItem" >
+          <div class="col-lg-1"></div>
+          <div class="col-lg-2 text-align-center" *ngFor="let item of BottomList" (click)="gotoHomePage(item.categoryid)">
+            <div>
+              <img src="../../assets/images/login/{{item.imageName}}" id="{{item.categoryid.catID}}" ng-mouseover="mouserOver($index);"
+                ng-mouseleave="mouseOut($index);" class="img-responsive categoryListImgWidhtHeight">
+            </div>
+            <div class="marginTopFive">
+              <b>{{item.title}}</b>
+            </div>
+          </div>
+          <div class="col-lg-1"></div>
+        </div>
+      </div>
+      <div class="col-lg-1"></div>
+    </div>
+  </div> -->
+  <div class="bgImgforSmalScreen">
+    <div class="row capcontainer">
+      <div class="col-md-12 capGrowingTitle">
+        <div class="col-12 txtBox span3">
+          <h1 class="capGrowingTxt">{{ 'Categories.GrowingText' | translate }}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row capGrowingCountpPadding">
+      <div class="col-sm-4 col-md-3 col-lg-4 paddingZeroPer margin-left-20" *ngFor="let item of countingBottomText">
+        <div class="panel-body">
+          <div>
+            <h1 class="counting">{{item.count}}</h1>
+            <h4 class="counting-bottom-text">{{item.title}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-dialog [width]="600" [modal]="true" header="{{ 'Categories.Registration' | translate }}" [(visible)]="display">
+  <cs-signup></cs-signup>
+</p-dialog>
+<!-- <p-dialog header="Tour" [(visible)]="tour">
+  <div align="center" style="width:600px;" class="embed-responsive embed-responsive-16by9">
+    <video autoplay loop class="embed-responsive-item" controls>
+      <source src="../../../assets/images/CapStore.mp4" type="video/mp4">
+    </video>
+  </div>
+</p-dialog> -->
+<div class="row text-align-center">
+  <div class="col-sm-12 objective_heading">
+    <h1><span>Objective</span></h1>
+  </div>
+</div>
+<div class="row objective text-align-center">
+    <div class="col-lg-4 col-md-12 objective_container">
+      <img src="../../../assets/images/ic_Unleash.png"/>
+      <h2>UNLEASH</h2>
+      <p>
+          Unleash your talent by sharing and
+          publishing your best work with
+          other, be it development
+          components, assets or templates
+      </p>
+    </div>
+    <div class="col-lg-4 col-md-12 objective_container">
+      <img src="../../../assets/images/ic_Unearth.png"/>
+      <h2>UNEARTH</h2>
+      <p>Looking for something, it is
+          a simple search away</p>
+    </div>
+    <div class="col-lg-4 col-md-12 objective_container">
+      <img src="../../../assets/images/ic_Anytime.png"/>
+      <h2>ANYTIME ANYWHERE</h2>
+      <p>
+          Access to information
+          through your desktop and
+          mobile on the move</p>
+    </div>
+</div>
+<div class="row text-align-center">
+  <div class="col-sm-12 objective_heading">
+    <h1><span>Features</span></h1>
+  </div>
+</div>
+<div class="row features">
+    <div class="col-lg-4 col-md-12 text-right">
+      <div class="features-content">
+        <h2>Make what you build reusable</h2>
+        <p>       
+          Upload, search, download<br>
+          and share content
+        </p>
+      </div>
+      <div class="features-content">
+        <h2>Publish & unleash</h2>
+        <p>       
+          Capstore not just allows your to<br>
+          publish your work to others, it make<br>
+          you popular. Popular work shows up.<br>
+          Aspire to get you work to the Top
+        </p>
+      </div>
+      <div class="features-content">
+        <h2>Download and reuse</h2>
+        <p>       
+          Download and reuse what you like. Just<br>
+          one thing we force is to share your<br>
+          feedback and it would benefit others
+        </p>
+      </div>
+      <div class="features-content">
+        <h2>Rate & great</h2>
+        <p>       
+          Rate the best work, give your view<br>
+          to make it even better
+        </p>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-12">
+      <img class="categorization" src="../../../assets/images/categorization.JPG"/>
+    </div>
+    <div class="col-lg-4 col-md-12">
+      <div class="features-right">
+        <h2>Fluid, Responsive &<br>
+          omnichannel design</h2>
+        <p>                 
+          easily accessed through desktop/<br>
+          laptop and mobile app
+        </p>
+      </div>
+      <div class="features-right">
+        <h2>Secure and enterprise grade</h2>
+        <p>                 
+          your content is secure and access<br>
+          limited within CG network
+        </p>
+      </div>
+      <div class="features-right">
+        <h2>Not a Junkyard</h2>
+        <p>                 
+          Only curated content managed by<br>
+          Practice/COE SMEs will be shared<br>
+          on Capstore
+        </p>
+      </div>
+      <div class="features-right">
+        <h2>Matrix to measure</h2>
+        <p>                 
+          - What is being reused - Prominently<br>
+          displays no. of views, downloads, favorites<br>
+          and ratings<br>
+          - What efforts are saved because of reused
+        </p>
+      </div>
+    </div>
+    </div>
+    <div class="row text-align-center">
+      <div class="col-sm-12 features">
+        <h2>Tagging & Categorization</h2>
+        <p>
+          Categorization and tagging of stored collaterals to ease the searchabillity
+        </p>
+      </div>
+    </div>

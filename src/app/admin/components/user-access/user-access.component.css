@@ -1,0 +1,161 @@
+.tableHeader{
+  width:100%;
+  margin-top: 25px;
+}
+
+.recordHeader{
+  margin-top: 2%;
+}
+.admin_profile p {
+    color: #fff;
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    white-space: nowrap;
+  }
+  .admin_profile-pic-border{
+      border-radius: 50%;
+      float: left;
+      height: 39px;
+      margin: 0 5px 0 0;
+      width: 39px;
+  }
+  .admin_profile-pic {
+     height: 40px;
+     width: 40px;
+  }
+  .center th{
+         text-align: center;
+  }
+  .center td{
+    text-align: center;
+}
+ .profile-search {
+    margin: 5px 0px;
+   }
+/* main layout */
+.mini-layout{
+  padding-bottom:10%;
+  overflow-x:hidden;
+  padding: 3%;
+}
+.form-control{
+  margin-top: 3px;
+}
+
+.emailSearch{
+  width: 120%;
+  margin-left: 89%;
+}
+.input-group-btn{
+  margin-top: 1px;
+}
+
+.emailBtn{
+  margin-top: 5%;
+  }
+
+   .buttonApproveUser{
+    height:24px;
+    width:63px;
+   }
+   h4{
+    text-align:center;
+    font-size:14px
+   }
+   .resetSearchButton{
+    margin-top:10px;
+    width: 7%;
+    padding-top: 8px;
+    margin-right: -15px;
+   }
+   .error-container{
+    color:red;
+   }
+   select{
+     width: 50%;
+   }
+   @media (min-width:294px) and (max-width:767px) {
+
+    select {width: 35%;}
+    .emailSearch{
+      width: 120%;
+      float: right;
+      margin-bottom: 33px;
+      margin-right: -44px;
+    }
+  .recordHeader{
+    margin-top: 14%;
+    margin-left: 4px;
+  }
+  .profile-search {
+    margin-bottom: -28px;}  
+
+   .tabmob ul{
+    margin-bottom: -31px;
+    }
+   .tableHeader a{
+    width:100%;
+    margin-bottom:25px;
+    }
+    .admin_profile-pic-border {
+      border-radius: 50%;
+      float: none;
+      height: 39px;
+      margin: 0 5px 0 0;
+      width: unset;
+    }
+    .resetSearchButton{
+      margin-top:10px;
+      width: 15% !important;
+      padding-top: 8px;
+      margin-right: -15px;
+     }
+  }
+
+  @media (min-width:320px) and (max-width:568px) {
+    .recordHeader{
+      margin-top: 19%;
+      margin-left: 3px;
+    }
+    .emailSearch{
+      margin-top: -5px;
+      margin-right: -40px;
+    }
+   }
+   @media (max-width: 1024px) and (min-width: 600px){
+    .recordHeader {
+      margin-top: 10%;
+      margin-left: 4px;
+  }
+.emailSearch {
+    margin-left: 236px;
+    margin-top: 13%;
+}
+select{
+  width: 22%;
+}
+   }
+   @media (min-width:768px) and (max-width:1024px){
+   .emailSearch{
+    margin-top: 12px;
+    margin-left: 139px !important;
+  }
+.recordHeader{
+  margin-top: 5%;
+}
+.profile-search {
+  margin-right: 32px;
+}  
+select {
+  width: 80%;
+}
+   }
+
+   @media (min-width:1024px) and (max-width:1366px){
+    .emailSearch{
+      padding-right: 13px;
+      margin-left: 152px !important;
+    }
+   }

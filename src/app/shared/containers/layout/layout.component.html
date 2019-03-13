@@ -1,0 +1,11 @@
+<cs-header (selectLanguage)="layoutSandbox.selectLanguage($event)" [selectedLanguage]="layoutSandbox.getCurrentLanguage()"
+    [availableLanguages]="layoutSandbox.availableLanguages"></cs-header>
+<div class="row" (click)="collapseNav()">
+        <div class="col-lg-1"></div>
+    <div class="col-lg-10" style="background: transparent;">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="col-lg-1"></div>
+</div>
+<cs-spinner [isRunning]="isLoading"></cs-spinner>
+<!-- <cs-footer></cs-footer> -->

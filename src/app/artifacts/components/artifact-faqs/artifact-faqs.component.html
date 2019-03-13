@@ -1,0 +1,88 @@
+<div class="container pageLayout">
+  <form novalidate [formGroup]="faqForm">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="form-group">
+          <input type="text" class="form-control height-35" formControlName="userQuery" placeholder="{{ 'artifact-details.QueryInput' | translate }}" required>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <button class="font-15 button-style" pButton type="button" [disabled]="faqForm.invalid" label="{{ 'artifact-details.QueryButton' | translate }}" (click)="postFaqQuery()"></button>
+        <button class="font-15 ui-button-secondary button-style" pTooltip="{{ 'artifact-details.BackButtonTooltip' | translate }}" tooltipPosition="top" pButton type="button" label="{{ 'artifact-details.BackButton' | translate }}" [routerLink]="['/artifacts/artifact-details/' + selectedProjectId]"></button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <p-dataList [value]="queries" id="faqDataList">
+        <ng-template let-query pTemplate="item" let-index="index">
+          <div class="row rowPadding" data-toggle="collapse" [attr.data-target]="'#query-'+ index" multiple="false">
+            <div class="col-lg-9 col-sm-8 col-md-10 col-xs-9">
+              <div class="queryText">
+                <b>{{ 'artifact-details.Query' | translate }} {{index+1}} : </b><span class="font-15">{{query.question}}</span>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-md-2 col-xs-3">
+              <span [hidden]="session.userId !== query.toUserId"
+                    class="glyphicon glyphicon-share-alt pull-right margin-top-30"
+                    pTooltip="{{ 'artifact-details.PostAnswerTooltip' | translate }}" tooltipPosition="right"
+                    (click)="selectedQuestion = index+1; answerFormDisplay(query)">
+              </span>
+              <br/>
+              <div class="postDate">
+                {{ 'artifact-details.PostDate' | translate }} - {{query.questionPostedDate | date: 'yyyy-MM-dd'}}<br/>
+                {{ 'artifact-details.By' | translate }} - {{query.fromUserName}}
+                <a [href]="'sip:' + query.fromUserEmailId | safeUrl" pTooltip="{{ 'artifact-details.SkypeTooltip' | translate }}" tooltipPosition="top">
+                  <i class="fa fa-skype tc-color-blue" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row rowPadding answerBlock collapse" id="query-{{index}}" [hidden]="!query.answer">
+            <div class="col-lg-9 col-sm-8 col-md-10 col-xs-9">
+              <div class="queryText">
+                <b>{{ 'artifact-details.Answer' | translate }} : </b><span class="font-15">{{query.answer}}</span><br/>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-md-2 col-xs-3">
+              <div class="ansDate">
+                {{ 'artifact-details.PostDate' | translate }} - {{query.answerPostedDate | date: 'yyyy-MM-dd'}} <br/>
+                {{ 'artifact-details.By' | translate }} - {{query.toUserName}}
+                <a [href]="'sip:' + query.toUserEmailId | safeUrl" pTooltip="{{ 'artifact-details.SkypeTooltip' | translate }}" tooltipPosition="top">
+                  <i class="fa fa-skype tc-color-blue" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataList>
+    </div>
+  </div>
+</div>
+
+<p-dialog [(visible)]="display" modal="modal" [style]="{'text-align':'left'}"
+          [responsive]="true" [width]="600"
+          [minWidth]="200" dismissableMask="true" [minY]="70" *ngIf="selectedQuery">
+  <p-header>
+    {{ 'artifact-details.AnswerPopupHeader' | translate }} ({{ 'artifact-details.Query' | translate }} {{selectedQuestion}}) <span class="tc-color-red">*</span>
+  </p-header>
+  <div class="row">
+    <div class="col-lg-12">
+      <form novalidate [formGroup]="faqAnswerForm">
+        <div class="form-group">
+          <textarea type="text" class="form-control"
+                    formControlName="ownerAnswer"
+                    placeholder="{{ 'artifact-details.AnswerPlaceholder' | translate }}"
+                    rows="3" ngModel="{{selectedQuery.answer}}"
+                    maxlength="200" required>
+          </textarea>
+        </div>
+      </form>
+    </div>
+  </div>
+  <p-footer>
+    <button class="margin-top-5 ui-button-secondary button-style" pButton type="button" label="{{ 'artifact-details.CancelButton' | translate }}" (click)="display = false;"></button>
+    <button class="margin-top-5 button-style" pButton type="Submit" [disabled]="faqAnswerForm.invalid || loading" (click)="postFaqAnswer(selectedQuery)" label="{{ 'artifact-details.PostButton' | translate }}"></button>
+  </p-footer>
+</p-dialog>

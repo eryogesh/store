@@ -1,0 +1,90 @@
+<div class="mini-layout" style="padding-top: 6%;">
+    <div class="nav nav-tabs tabmob">
+        <div class="tableHeader row">
+            <span data-toggle="tab" class="col-lg-6 col-md-6 col-sm-6 recordHeader">{{ 'Admin.ApprovalRequests' | translate }} ({{totalRecords}})</span>
+            <span class="col-md-4 col-sm-4 col-lg-4">
+                <form class="form-inline searchDisplay" action="/action_page.php">
+                    <div class="profile-search pull-right ">
+                        <div class="input-group emailSearch">
+                            <input type="text" [(ngModel)]="emailAddress" name="owner" class="form-control" placeholder="{{ 'Admin.Owner' | translate }}"
+                                >
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default emailBtn" pTooltip="{{ 'Admin.Search' | translate }}" tooltipPosition="top"
+                                    (click)="usersToApproveAccess();">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </span>
+        </div>
+    </div>
+
+    <p-table [value]="usersToApprove" [paginator]="true" [rows]="10" [responsive]="true">
+        <ng-template pTemplate="header">
+            <tr class="center">
+                <th>{{ 'Admin.Name' | translate }}</th>
+                <th>{{ 'Admin.UserAccess.Date' | translate }} </th>
+                <th>{{ 'Admin.Profile' | translate }} </th>
+                <th> {{ 'Admin.UserAccess.Role' | translate }}</th>
+                <th> {{ 'Admin.UserAccess.Action' | translate }}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data let-i="rowIndex">
+            <tr class="center">
+
+                <td>
+                    <div class="admin_profile-pic-border">
+                        <img class="admin_profile-pic" src="assets/images/user-icon.png">
+                    </div>
+                    <div> {{data.name}}
+                        <a [href]="'sip:' + data.emailID | safeUrl" pTooltip="{{ 'Admin.SkypeChat' | translate }}" tooltipPosition="top">
+                            <i class="fa fa-skype" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
+                    <br/> {{data.designation}} | {{ 'Admin.UserAccess.capgemini' | translate }}
+                </td>
+                <td>
+                    {{data.lastLogin  | amLocal | amDateFormat: 'YYYY-MM-DD'}}
+
+                </td>
+                <td>
+                    <select name="userProfile" [(ngModel)]="data.userAccess.profileId" (change)="changeUserProfile(data.userAccess.profileId)"
+                        required>
+                        <option *ngFor="let userProfile of userProfiles" [ngValue]="userProfile.profileId">
+                            {{userProfile.profileName}}
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <select name="userRole" [(ngModel)]="data.userAccess.roleId" (change)="changeUserRole(data.userAccess.roleId,data.userID)"
+                        required>
+                        <option *ngFor="let userRole of userRoles" [ngValue]="userRole.roleId">
+                            {{userRole.roleName}}</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="buttonApproveUser" type="submit" pButton (click)="approveUser(data.userID,i,data.userAccess.roleId,data.userAccess.profileId)">
+                        {{ 'Admin.Approve' | translate }}
+                    </button>&nbsp;
+                    <div class="error-container" *ngIf="showErrorMsg[data.userID]">
+                        <p>{{errorMsg}}</p>
+                    </div>
+                </td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <div class="row" *ngIf="isCancelable">
+        <div class="form-group col-lg-12 col-sm-12 col-md-12">
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <button type="button" class="pull-right ui-button-secondary resetSearchButton" pButton (click)="resetSearch()">{{ 'CancelBtn' | translate }}</button>
+            </div>
+
+        </div>
+    </div>
+    <p-growl [style]="{'top':'100px'}"></p-growl>
+</div>

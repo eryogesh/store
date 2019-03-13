@@ -1,0 +1,60 @@
+<div>
+  <span>{{ 'artifact-details.ReviewCount' | translate }} ({{reviewListCount}})</span>
+  <span *ngIf="hideNewVersionTemplate">
+    <span  [hidden]="userDetails && !(artifactData.userDownloaded && artifactData.assetStatusId!=='SU' && artifactData.assetStatusId!=='RJ' && artifactData.ownerName!==userDetails.name)">
+          <a (click)="displayReview = true" class="tc-color-blue cursor-pointer">{{ 'artifact-details.AddReview' | translate }}</a>
+    </span>
+  </span>
+
+  <p-dataGrid [value]="artifactReviewList" [paginator]="true" [rows]="2">
+    <ng-template let-projectReview pTemplate="item">
+      <div style="padding:15px" class="ui-g-12 ui-md-6">
+        <img class="avatar" src="{{projectReview.userImage}}" (error)="utilityService.imgErorHandler($event, 'user')">
+        <b> {{projectReview.userName}}</b>
+        <a [href]="'sip:' + projectReview.userEmailID | safeUrl" pTooltip="{{ 'artifact-details.SkypeTooltip' | translate }}" tooltipPosition="top">
+          <i class="fa fa-skype tc-color-blue" aria-hidden="true"></i>
+        </a>
+        <div class="reviewText">
+          {{projectReview.reviewText}}
+        </div>
+        <div class="reviewText">
+          <p-rating #rating readonly="true" [cancel]="false" name="rating" [(ngModel)]="projectReview.rating"></p-rating>
+        </div>
+        <!--<hr class="ui-widget-content" style="border-top:0">-->
+      </div>
+    </ng-template>
+  </p-dataGrid>
+</div>
+
+<!-- ####### START: REVIEW POPUP ########-->
+<p-dialog [(visible)]="displayReview" modal="modal" [style]="{'text-align':'left'}"
+          [responsive]="true" [width]="600"
+          [minWidth]="200" dismissableMask="true" [minY]="70">
+  <p-header>
+    {{ 'artifact-details.ReviewPopupHeader' | translate }}
+  </p-header>
+  <div class="row">
+    <label for="review" class="control-label margin-left-18">{{ 'artifact-details.ReviewCommentInput' | translate }}</label>
+    <div class="col-lg-12 col-sm-12 col-md-12 margin-left-5">
+          <textarea [rows]="3" [cols]="30"
+                    pInputTextarea autoResize="autoResize"
+                    class="form-control width100" name="reviewText"
+                    id="review" maxlength="200"
+                    [(ngModel)]="userReviewComment.reviewText"
+                    placeholder="{{ 'artifact-details.ReviewPopupHeader' | translate }}"
+                    required>
+          </textarea>
+    </div>
+  </div>
+  <div class="row padding-top-20">
+    <label for="review" class="control-label margin-left-18">{{ 'artifact-details.ReviewRatingInput' | translate }}</label>
+    <div class="col-lg-12 col-sm-12 col-md-12 margin-left-5">
+      <p-rating [cancel]="false" [(ngModel)]="userReviewComment.rating" name="rating"></p-rating>
+    </div>
+  </div>
+  <p-footer>
+    <button pButton type="button" label="{{ 'artifact-details.CancelButton' | translate }}" (click)="displayReview = false" class="ui-button-secondary button-style"> </button>
+    <button pButton type="Submit" label="{{ 'artifact-details.SubmitButton' | translate }}" class="button-style" [disabled]="!userReviewComment.reviewText || !userReviewComment.rating" (click)="postProjectReviews(userReviewComment)"></button>
+  </p-footer>
+</p-dialog>
+<!-- ####### STOP: REVIEW POPUP ########-->

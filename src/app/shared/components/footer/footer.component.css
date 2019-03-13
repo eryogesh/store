@@ -1,0 +1,9 @@
+.footer{
+    width: 100%;
+    float: left;
+    bottom: 0;
+  position:fixed;
+   /* Set the fixed height of the footer here */
+  }
+
+  

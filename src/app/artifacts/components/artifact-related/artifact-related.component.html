@@ -1,0 +1,58 @@
+<span *ngIf="displayRelatedArtifacts ;then viewArtifact else noArtifact"></span>
+<ng-template #noArtifact>{{ 'artifact-details.NoRelatedArtifactFound' | translate }}</ng-template>
+<ng-template #viewArtifact>
+  <span class="text-font-14">
+
+    <p-dataView #dvRecent [value]="relatedArtifacts.project_results" [paginator]="true" [rows]="3" filterBy="brand"
+                [layout]="'grid'">
+
+         <ng-template let-project pTemplate="gridItem" class="1">
+            <div class="ui-lg-4 ui-md-4 ui-sm-10 dv-grid-padding gridMarg">
+                <div class="grid-div mainGrid">
+                    <figure>
+                        <div class="figDiv">
+                            {{project.categoryName}}
+                        </div>
+                        <picture (click)="relatedArtifactDetailsNavigation(project)">
+                            <img class="imgCls" src="{{utilityService.getProjectImage(project.imageUrl, project.projectType)}}" alt="{{project.projectType}}"
+                                 (error)="utilityService.imgErorHandler($event, 'project')" />
+                        </picture>
+                        <figcaption style="margin-top:-5%;">
+                            <p class="fds-c-text-body fdsAlign">
+                                {{project.ownerName}}
+                                <a [href]="'sip:' + project.ownerEmailID | safeUrl" pTooltip="Skype Chat" tooltipPosition="top">
+                                    <i class="fa fa-skype tc-color-blue" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                            <p class="fds-c-text-body fdsBody">{{project.projectName}}</p>
+                        </figcaption>
+                        <div class="profile">
+                                <img src="{{utilityService.getProjectImage(project.ownerImage, project.projectType)}}"/>
+                        </div>
+                    </figure>
+                    <div class="horizontal-line figAfter"></div>
+                    <div class="gird-footer-div footer-div">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-lg-3 widthRow rowData" pTooltip="{{ 'artifact-details.DownloadCountTooltip' | translate }}" tooltipPosition="right">
+                                <span class="glyphicon glyphicon-download-alt  rowSpan"></span>
+                                <span style="color:black">{{project.downloadCount}}</span>
+                            </div>
+                            <div class="col-lg-3 widthRow rowDiv2" pTooltip="{{ 'artifact-details.ViewCountTooltip' | translate }}" tooltipPosition="right">
+                                <span class="fa fa-eye rowDiv2Span"> </span>
+                                <span style="color:black">{{project.viewCount}}</span>
+                            </div>
+                            <div class="col-lg-3 widthRow rowData" pTooltip="{{ 'artifact-details.AvgRatingCountTooltip' | translate }}" tooltipPosition="right">
+                                <span class="fa fa-star rowSpan2"></span>
+                                <span style="color:black"> {{project.avgRating | number : '0.1-2'}}</span>
+                            </div>
+                            <div class="col-lg-3 widthRow"> 
+                                <span class="yammer-span" pTooltip="{{ 'artifact-details.ShareOnYammer' | translate }}" tooltipPosition="right"><img src="../../../../assets/images/yammer.png" class="yammer-btn" (click)="yammerWindowPopup(project.ownerName,project.projectName)"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+  </span>
+</ng-template>

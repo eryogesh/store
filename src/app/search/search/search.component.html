@@ -1,0 +1,69 @@
+<div class="container search-container">
+    <!-- ####### START:ARTIFACT ########-->
+    <!-- <p-growl [value]="msgs" [style]="{'top':'100px'}"></p-growl> -->
+    <p-dataScroller [value]="assetData" [rows]="12" (onLazyLoad)="loadData($event)" [lazy]="true" [totalRecords]="totalRecords">
+        <!-- AITRFACT GRID VIEW -->
+        <ng-template let-project pTemplate="gridItem" class="tempProj">
+            <div class="ui-g-12 ui-md-4 dv-grid-padding gridMarg">
+                <div class="grid-div mainGrid">
+                    <figure>
+                        <div class="figDiv">
+                            <span *ngIf="project.categoryName !== 'Smart Processes and Digital Integration'">{{project.categoryName}}</span>
+                            <span *ngIf="project.categoryName === 'Smart Processes and Digital Integration'">
+                                <abbr title="Smart Processes and Digital Integration">{{project.categoryName}}</abbr>
+                            </span>
+                        </div>
+                        <picture (click)="viewProject(project.projId, project.assetStatusId,project.isPublished);">
+                            <img class="imgCls" src="{{utilityService.getProjectImage(project.imageUrl, project.projectType)}}" alt="{{project.projectType}}"
+                                (error)="utilityService.imgErorHandler($event, 'project')" />
+                        </picture>
+                        <figcaption style="margin-top:-5%;">
+                            <p class="fds-c-text-body fdsAlign">
+                                {{project.ownerName}}
+                                <a [href]="'sip:' + project.ownerEmailID | safeUrl" pTooltip="Skype Chat" tooltipPosition="top">
+                                    <i class="fa fa-skype tc-color-blue" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                            <p class="fds-c-text-body fdsBody">{{project.projectName}}</p>
+                        </figcaption>
+                        <div class="profile">
+                                <img src="{{utilityService.getProjectImage(project.ownerImage, project.projectType)}}"/>
+                        </div>
+                    </figure>
+                    <div class="horizontal-line figAfter"></div>
+                    <div class="gird-footer-div footer-div">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-lg-3 widthRow rowData">
+                                <span pTooltip="{{ 'artifact-details.DownloadCountTooltip' | translate }}" tooltipPosition="left" class="glyphicon glyphicon-download-alt  rowSpan"></span>
+                                <span style="color:black">{{project.downloadCount}}</span>
+                            </div>
+                            <div class="col-lg-3 widthRow rowDiv2">
+                                <span pTooltip="{{ 'artifact-details.ViewCountTooltip' | translate }}" tooltipPosition="left" class="fa fa-eye rowDiv2Span">
+                                </span>
+                                <span style="color:black">{{project.viewCount}}</span>
+                            </div>
+                            <div class="col-lg-3 widthRow rowData">
+                                <span pTooltip="{{ 'artifact-details.AvgRatingCountTooltip' | translate }}" tooltipPosition="left" class="fa fa-star rowSpan2"></span>
+                                <span style="color:black"> {{project.avgRating | number : '0.1-2'}}</span>
+                            </div>
+                            <div class="col-lg-3 widthRow"> 
+                                <span class="yammer-span" pTooltip="{{ 'artifact-details.ShareOnYammer' | translate }}" tooltipPosition="right"><img src="../../../../assets/images/yammer.png" class="yammer-btn" (click)="yammerWindowPopup(project.ownerName,project.projectName)"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataScroller>
+    <div *ngIf="displayMessage" style="margin-left: 1%;padding-top: 3%;">
+        <span>
+            <b>{{displayMessage}}</b>
+        </span>
+    </div>
+
+
+    <!-- ####### END: ARTIFACT ########-->
+
+    <!-- Added below div with style margin-bottom, because of fixed footer hiding contant -->
+    <div class="footer-dv-margin"></div>
+</div>

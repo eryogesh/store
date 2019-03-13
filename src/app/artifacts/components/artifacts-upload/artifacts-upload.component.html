@@ -1,0 +1,464 @@
+<div class="container" style="padding-top:5%">
+  <div class="row">
+    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6 dispInline">
+      <h3 class="margin-top-50"><b>{{'artifact-upload.UploadYourFiles' | translate }}</b>
+      <a (click)="op1.toggle($event)" class="displayNone">
+
+          <img style="cursor:pointer;width:20px;height:20px;" src="/assets/images/instruction_28.png">
+      </a> </h3>
+    </div>
+
+    <p-overlayPanel [styleClass]="'overlay-content'" #op1>
+      <p>
+      <li>{{ 'artifact-upload.InstructionNoOne' | translate }}</li>
+      <li>{{ 'artifact-upload.InstructionNoTwo' | translate }}</li>
+      <li>{{ 'artifact-upload.InstructionNoThree' | translate }}</li>
+      <li>{{ 'artifact-upload.InstructionNoFour' | translate }}</li>
+      <li>{{ 'artifact-upload.InstructionNoFive' | translate }}</li>
+      <li>{{ 'artifact-upload.InstructionNoSix' | translate }}</li>
+      <li>{{ 'artifact-upload.InstructionNoSeven' | translate }}</li>
+      </p>
+    </p-overlayPanel>
+  </div>
+  <div>
+    <p>{{'artifact-upload.PreMandatoryFieldMsg' | translate }} <span class="require-symbol">*</span> {{'artifact-upload.PostMandatoryFieldMsg' | translate }}</p>
+  </div>
+  <form novalidate [formGroup]="uploadForm">
+      <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group"
+                 [ngClass]="{
+                  'has-danger': uploadAssets.invalid && (uploadAssets.dirty || uploadAssets.touched),
+                  'has-success': uploadAssets.valid && (uploadAssets.dirty || uploadAssets.touched)
+                }">
+              <!-- <label>Upload Assets <span class="tc-color-red"> * </span></label> -->
+              <div class="asset-upload">
+                <label for="asset-upload" style="width: 100%;">
+                  <div class="drop-file-block boxRadius dragBoxHieght" (drop)="onAssetDrop($event)" (dragover)="allowDrop($event)">
+
+                    <div class="row" style="margin-top:1%; ">
+                      <div class="col-lg-5"></div>
+                      <div class="col-lg-2">
+                          <img  alt="" src="../../assets/images/ic_upload.png">
+                      </div>
+                      <div class="col-lg-5"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-4"></div>
+                      <div class="col-lg-4 paddingTop"><b>{{'artifact-upload.DragNDropFile' | translate }}</b></div>
+                      <div class="col-lg-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">or</div>
+                        <div class="col-lg-4"></div>
+                      </div>
+                      <div class="row">
+                          <div class="col-lg-4"></div>
+                          <div class="col-lg-4">
+                              <div class="btn btn-primary btn-md uploadBtn uploadBtnUiFix"><span class="btnText">{{'artifact-upload.SelectFile' | translate }}</span>
+                              </div>
+                          </div>
+                          <div class="col-lg-4"></div>
+                        </div>
+
+                  </div>
+                </label>
+
+                <input id="asset-upload" type="file" (change)="onAssetUpload($event);"
+                icon-model="usericon"/>
+                <div class="bottomBox">
+                <div id="fileUl1" class="tempCheck">
+                  <div id="files{{i}}" *ngFor="let file of fileCollection let i =index " style="  margin-bottom:0.5%; width: 100%">
+                    <!-- <img style="height: 20px;width: 30px;margin-left: 2%;" src="{{fileExtensionImg}}" /> -->
+                    <div style="margin-top:1%">
+                      <span style="margin-left: 2%;font-weight: bold;">&nbsp; {{i + 1}}.
+                      </span>
+                      <span style="font-size: 14px;font-weight: bold;margin-left: 1%;">{{file}} </span>
+                      <div class=" fa fa-trash fa-md cursor-pointer" style="float: right;margin-right:25px;padding-top: 4px;color:red;" (click)="removeAssetFile(i,file)">
+                      <span>{{'artifact-upload.Remove' | translate }}</span>
+                    </div>
+                    </div>
+                  </div>
+                </div></div>
+              </div>
+
+              <p *ngIf="selectedfilenumber">
+                <span class="tc-color-red">{{'artifact-upload.FileCountMessage' | translate }}</span>
+              </p>
+              <p *ngIf="selectedfileerror">
+                <span class="tc-color-red">{{'artifact-upload.FileSizeMessage' | translate }}</span>
+              </p>
+              <p *ngIf="isZipdelete">
+                <span class="tc-color-red">{{'artifact-upload.OneZipMessage' | translate }}</span>
+              </p>
+              <p *ngIf="isIpadelete">
+                <span class="tc-color-red">{{'artifact-upload.IpaMessage' | translate }}</span>
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      <hr>
+    <div class="row">
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <div class="form-group">
+          <label><b>{{'artifact-upload.ProjectName' | translate }}</b> <span class="tc-color-red"> * </span></label>
+            <input type="text"
+                   class="form-control height-35"
+                   formControlName="projectName"
+                   placeholder="{{'artifact-upload.ProjectName' | translate }}"
+                   required>
+            <div *ngIf="projectName.errors && (projectName.dirty || projectName.touched)">
+              <p *ngIf="uploadForm.controls['projectName'].hasError('required') && !projectName.untouched">
+                <span class="tc-color-red">{{'artifact-upload.ProjectNameRequiredMsg' | translate }}</span>
+              </p>
+              <p *ngIf="uploadForm.controls['projectName'].hasError('maxlength')">
+                <span class="tc-color-red">{{'artifact-upload.ProjectNameMaxSizeMsg' | translate }}</span>
+              </p>
+              <p *ngIf="uploadForm.controls['projectName'].hasError('minlength')">
+                <span class="tc-color-red">{{'artifact-upload.ProjectNameMinMsg' | translate }}</span>
+              </p>
+            </div>
+        </div>
+
+            <div class="form-group"
+                 [ngClass]="{
+                  'has-danger': uploadType.invalid && (uploadType.dirty || uploadType.touched),
+                  'has-success': uploadType.valid && (uploadType.dirty || uploadType.touched)
+                }">
+              <label><b>{{ 'artifact-upload.UploadType' | translate }}</b><span class="tc-color-red"> * </span></label>
+              <select formControlName="uploadType" (change)="onUploadTypeChange($event.target.value)"  class="form-control col-lg-12 text-font-14">
+                <option value="">{{ 'artifact-upload.SelectUploadType' | translate }}</option>
+                <option *ngFor="let type of uploadTypes" [value]="type.assetFormatId">
+                  {{type.assetFormat}}
+                </option>
+              </select>
+              <div *ngIf="uploadType.errors && (uploadType.dirty || uploadType.touched)">
+                <p *ngIf="uploadForm.controls['uploadType'].hasError('required')">
+                  <span class="tc-color-red">{{ 'artifact-upload.UploadTypeRequiredMsg' | translate }}</span>
+                </p>
+              </div>
+            </div>
+
+      </div>
+      
+      <div class="col-sm-8 col-md-8 col-lg-8" >
+          <div class="form-group"
+               [ngClass]="{
+                'has-danger': projectIcon.invalid && (projectIcon.dirty || projectIcon.touched),
+                'has-success': projectIcon.valid && (projectIcon.dirty || projectIcon.touched)
+              }">
+            <label>  <span class="tc-color-red"></span></label>
+            <div *ngIf="isEditClicked">
+              <b>{{ 'artifact-upload.UploadProjectIcon' | translate }}</b><br>
+              <img [src]="projectImgUrl" class="project-img">
+            </div>
+            <div class="selectedfileicon" *ngIf="!isEditClicked">
+                <label for="selectedfileicon" id="selectedIconID" class="fileIconCls">
+                  <div class="drop-file-block dropBox cursor-pointer" (drop)="onAssetDrop($event)" (dragover)="allowDrop($event)">
+                      <!-- <span class="fa fa-cloud-upload fa-3x" style="margin-top: 2%;"></span><br> -->
+                      <div class="row" style="margin-top:1%; ">
+                        <div class="col-lg-5"></div>
+                        <div class="col-lg-2">
+                            <img  alt="" src="../../assets/images/ic_upload.png">
+                        </div>
+                        <div class="col-lg-5"></div>
+                      </div>
+                    <b>{{ 'artifact-upload.UploadProjectIcon' | translate }}</b><br>
+                    <p style="font-size: 11px;"><b>{{ 'artifact-upload.UploadProjectIconMsg' | translate }}</b></p>
+
+                  </div>
+                </label>
+                <img *ngIf="displayProjectIcon" [src]="projectIconUrl | safeUrl" class="display-project-img">
+                <input type="file" id="selectedfileicon" (change)="projectIconFile($event.target.files)"
+                   class="selectedfileicon" name="selectedfileicon" class="line-height-20"
+                   file-model="selectedfileicon" multiple accept='image/*' style="display:none;"/>
+              </div>
+
+              <p *ngIf="selectedfileiconerror">
+                <span class="tc-color-red">{{ 'artifact-upload.UploadProjectIconRequiredMsg' | translate }}</span>
+              </p>
+
+          </div>
+        </div>
+        <!-- <div class="col-sm-4 col-md-4 col-lg-4">
+
+          <img *ngIf="displayProjectIcon" [src]="projectIconUrl" class="display-project-img" style="margin-top: 6px;">
+        </div> -->
+    </div>
+<hr>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group"
+             [ngClass]="{
+              'has-danger': category.invalid && (category.dirty || category.touched),
+              'has-success': category.valid && (category.dirty || category.touched)
+            }">
+          <label><b>{{ 'artifact-upload.Category' | translate }}</b> <span class="tc-color-red"> * </span></label>
+          <select *ngIf="versionUpdate" [(ngModel)]="selectedCategory.catID" formControlName="category" (change)="loadSubCategories($event.target.value)" class="form-control col-lg-12 text-font-14">
+            <option value="">{{ 'artifact-upload.SelectCategory' | translate }}</option>
+            <option *ngFor="let c of categories" [value]="c.catID"> {{c.categoryName}} </option>
+          </select>
+
+          <select *ngIf="!versionUpdate" formControlName="category" (change)="loadSubCategories($event.target.value)" class="form-control col-lg-12 text-font-14">
+            <option value="">{{ 'artifact-upload.SelectCategory' | translate }}</option>
+            <option *ngFor="let c of categories" [value]="c.catID"> {{c.categoryName}} </option>
+          </select>
+
+          <div *ngIf="category.errors && (category.dirty || category.touched)">
+            <p *ngIf="uploadForm.controls['category'].hasError('required')">
+              <span class="tc-color-red">{{ 'artifact-upload.SelectCategoryRequiredMsg' | translate }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group"
+             [ngClass]="{
+              'has-danger': subcategory.invalid && (subcategory.dirty || subcategory.touched),
+              'has-success': subcategory.valid && (subcategory.dirty || subcategory.touched)
+            }">
+          <label><b>{{ 'artifact-upload.Sub-Category' | translate }}</b><span class="tc-color-red"> * </span></label>
+          <select *ngIf="versionUpdate" [(ngModel)]="selectedSubCategory.catID" formControlName="subcategory" (change)="selectSubCategory($event.target.value)" class="form-control col-lg-12 text-font-14">
+            <option value=""> {{ 'artifact-upload.SelectSubCategory' | translate }}</option>
+            <option *ngFor="let subcat of subcategories" [value]="subcat.catID"> {{subcat.categoryName}} </option>
+          </select>
+
+          <select *ngIf="!versionUpdate" formControlName="subcategory" (change)="selectSubCategory($event.target.value)" class="form-control col-lg-12 text-font-14">
+            <option value=""> {{ 'artifact-upload.SelectSubCategory' | translate }}</option>
+            <option *ngFor="let subcat of subcategories" [value]="subcat.catID"> {{subcat.categoryName}} </option>
+          </select>
+          <div *ngIf="subcategory.errors && (subcategory.dirty || subcategory.touched)">
+            <p *ngIf="uploadForm.controls['subcategory'].hasError('required')">
+              <span class="tc-color-red">{{ 'artifact-upload.SelectSubCategoryRequiredMsg' | translate }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group"
+                 [ngClass]="{
+                  'has-danger': tags.invalid && (tags.dirty || tags.touched),
+                  'has-success': tags.valid && (tags.dirty || tags.touched)
+                }">
+              <label><b>{{ 'artifact-upload.SelectTags' | translate }}</b><span class="tc-color-red"> * </span></label>
+              <!-- <input type="text"
+                     class="form-control height-35"
+                     formControlName="tags"
+                     placeholder="{{ 'artifact-upload.SelectTagsPlaceholder' | translate }}"
+                     required> -->
+                     <cs-tags [tags]="items" (tagAdded)='updateTags($event)'></cs-tags>
+              <!-- <div *ngIf="tags.errors && (tags.dirty || tags.touched)">
+                <p *ngIf="uploadForm.controls['tags'].hasError('required')">
+                  <span class="tc-color-red">{{ 'artifact-upload.TagRequiredMsg' | translate }}</span>
+                </p>
+                <p *ngIf="uploadForm.controls['tags'].hasError('maxlength')">
+                  <span class="tc-color-red">{{ 'artifact-upload.TagMaxSizeMsg' | translate }}</span>
+                </p>
+                <p *ngIf="uploadForm.controls['tags'].hasError('minlength')">
+                  <span class="tc-color-red">{{ 'artifact-upload.TagMinSizeMsg' | translate }}</span>
+                </p>
+              </div> -->
+            </div>
+          </div>
+
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group"
+             [ngClass]="{
+              'has-danger': description.invalid && (description.dirty || description.touched),
+              'has-success': description.valid && (description.dirty || description.touched)
+            }">
+          <label><b>{{ 'artifact-upload.SelectDescription' | translate }}</b> <span class="tc-color-red"> * </span></label>
+          <app-ngx-editor [placeholder]="'Enter Description here...'"
+                          [spellcheck]="true"
+                          formControlName="description"
+                          required>
+          </app-ngx-editor>
+          <div *ngIf="description.errors && (description.dirty || description.touched)">
+            <p *ngIf="uploadForm.controls['description'].hasError('required')">
+              <span class="tc-color-red">{{ 'artifact-upload.DescriptionRequiredMsg' | translate }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group"
+             [ngClass]="{
+              'has-danger': features.invalid && (features.dirty || features.touched),
+              'has-success': features.valid && (features.dirty || features.touched)
+            }">
+          <label><b>{{ 'artifact-upload.SelectFeatures' | translate }}</b>  <span class="tc-color-red"> * </span></label>
+          <app-ngx-editor [placeholder]="'Enter Features here...'"
+                          [spellcheck]="true"
+                          formControlName="features"
+                          required>
+          </app-ngx-editor>
+          <div *ngIf="features.errors && (features.dirty || features.touched)">
+            <p *ngIf="uploadForm.controls['features'].hasError('required')">
+              <span class="tc-color-red">{{ 'artifact-upload.FeaturesRequiredMsg' | translate }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group"
+             [ngClass]="{
+              'has-danger': efforts.invalid && (efforts.dirty || efforts.touched),
+              'has-success': efforts.valid && (efforts.dirty || efforts.touched)
+            }">
+          <label><b>{{ 'artifact-upload.SelectEfforts' | translate }}</b> <span class="tc-color-red"> * </span></label>
+          <input type="number"
+                 class="form-control height-35"
+                 formControlName="efforts"
+                 placeholder="{{ 'artifact-upload.SelectEfforts' | translate }}"
+                 required>
+          <div *ngIf="efforts.errors && (efforts.dirty || efforts.touched)">
+            <p *ngIf="uploadForm.controls['efforts'].hasError('required') && !efforts.untouched">
+              <span class="tc-color-red">{{ 'artifact-upload.EffortsRequiredMsg' | translate }}</span>
+            </p>
+            <p *ngIf="uploadForm.controls['efforts'].hasError('pattern')">
+              <span class="tc-color-red">{{ 'artifact-upload.EffortdNumMsg' | translate }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group"
+             [ngClass]="{
+              'has-danger': versionName.invalid && (versionName.dirty || versionName.touched),
+              'has-success': versionName.valid && (versionName.dirty || versionName.touched)
+            }">
+          <label><b>{{ 'artifact-upload.SelectVersion' | translate }}</b><span class="tc-color-red"> * </span></label>
+          <input type="number"
+                 class="form-control height-35"
+                 formControlName="versionName"
+                 placeholder="{{ 'artifact-upload.SelectVersion' | translate }} {{ 'artifact-upload.SelectVersionEx' | translate }}"
+                 required>
+          <div *ngIf="versionName.errors && (versionName.dirty || versionName.touched)">
+            <p *ngIf="uploadForm.controls['versionName'].hasError('required') && !versionName.untouched">
+              <span class="tc-color-red">{{ 'artifact-upload.VersionRequiredMsg' | translate }}</span>
+            </p>
+            <p *ngIf="uploadForm.controls['versionName'].hasError('pattern')">
+              <span class="tc-color-red">{{ 'artifact-upload.VersionNumMsg' | translate }}</span>
+            </p>
+            <p *ngIf="isVersionSmall">
+              <span class="tc-color-red">{{ 'artifact-upload.VersionCountMsg' | translate }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+     <div class="row" *ngIf = "isUpload">
+
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group"
+             [ngClass]="{
+              'has-danger': supportDocs.invalid && (supportDocs.dirty || supportDocs.touched),
+              'has-success': supportDocs.valid && (supportDocs.dirty || supportDocs.touched)
+            }">
+          <label><b>{{ 'artifact-upload.UploadSupportingDocs' | translate }}</b><span class="tc-color-red"> * </span></label>
+          <div class="supportDocs-upload">
+            <label for="supportDocs-upload" style="width: 100%;">
+                 <div class="drop-file-block boxRadius dragBoxHieght" (drop)="onSupportDocsDrop($event)" (dragover)="allowDrop($event)">
+         <span *ngIf = "isUpload;then dropFile else disableDropFile">
+                   </span>
+                   <ng-template #disableDropFile>{{ 'artifact-upload.Disable' | translate }}</ng-template>
+                   <ng-template #dropFile>
+                   <div class="row" style="margin-top:1%; ">
+                     <div class="col-lg-5"></div>
+                     <div class="col-lg-2">
+                         <img  alt="" src="../../assets/images/ic_upload.png">
+                     </div>
+                     <div class="col-lg-5"></div>
+                   </div>
+                   <div class="row">
+                     <div class="col-lg-4"></div>
+                     <div class="col-lg-4"><b>{{ 'artifact-upload.DragNDropFile' | translate }}</b></div>
+                     <div class="col-lg-4"></div>
+                   </div>
+                   <div class="row">
+                       <div class="col-lg-4"></div>
+                       <div class="col-lg-4">or</div>
+                       <div class="col-lg-4"></div>
+                     </div>
+                     <div class="row">
+                         <div class="col-lg-4"></div>
+                         <div class="col-lg-4">
+                             <a (click)="$event.stopPropagation()" class="btn btn-primary btn-md uploadBtn uploadBtnUiFix"><span class="btnText">{{ 'artifact-upload.SelectFile' | translate }}</span>
+                             </a>
+                         </div>
+                         <div class="col-lg-4"></div>
+                       </div>
+                    </ng-template>
+                 </div>
+               </label>
+
+           <input id="supportDocs-upload" type="file" accept="image/*" (change)="onSupportDocsUpload($event.target.files)"
+                  icon-model="usericon"/>
+      <div class="bottomBox">
+               <div id="supportDocsUI" class="tempCheck">
+                 <div id="supportDocs{{i}}" *ngFor="let file of supportDocsCollection let i =index " style="  margin-bottom:0.5%; width: 100%">
+                   <div style="margin-top:1%">
+                     <span style="margin-left: 2%;font-weight: bold;">&nbsp; {{i + 1}}.</span>
+                     <!-- <img style="height: 20px;width: 30px;margin-left: 2%;" src="{{supportfileExtensionImg}}" /> -->
+                     <span style="font-size: 14px;font-weight: bold;margin-left: 1%;">{{file}} </span>
+                     <div class=" fa fa-trash fa-md cursor-pointer" style="float: right;margin-right:25px;padding-top: 4px;color:red;" (click)="removeSupportingDocs(i,file)">
+                     <span>{{ 'artifact-upload.Remove' | translate }}</span>
+                   </div>
+                   </div>
+                 </div>
+               </div></div>
+   </div>
+          <p *ngIf="supportDocsNumber">
+            <span class="tc-color-red">{{ 'artifact-upload.FileCountMessage' | translate }}</span>
+          </p>
+          <p *ngIf="imageOnly">
+            <span class="tc-color-red">{{ 'artifact-upload.UploadImageMsg' | translate }}</span>
+          </p>
+        </div>
+        <hr>
+      </div>
+
+    </div>
+
+    <div class="row margin-bottom-15">
+      <div class="form-group col-lg-12 col-sm-12 col-md-12">
+        <div class="col-lg-12 col-sm-12 col-md-12 margin-bottom-5">
+            <!-- <button class="btn btn-primary btn-sm uploadSubBtn" [disabled]="uploadForm.invalid" (click)="saveUploadedArtifact()">{{ 'artifact-upload.SubmitBtn' | translate }}</button>
+            <button class="btn btn-primary btn-sm uploadResetBtn ui-button-secondary" type="cancel" (click)="homePage()">{{ 'artifact-upload.CancelBtn' | translate }}</button> -->
+            
+            <button pButton type="button" label="{{ 'artifact-upload.CancelBtn' | translate }}" class="ui-button-secondary button-style" type="cancel" (click)="homePage()"></button>
+            <button pButton type="button" label="{{ 'artifact-upload.SubmitBtn' | translate }}" class="button-style" [disabled]="uploadForm.invalid" (click)="saveUploadedArtifact()"></button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<p-confirmDialog header="{{ 'artifact-upload.UploadConfirmDialog.Header' | translate }}" width="425" #cd
+                 message="<ul><h6>{{ 'artifact-upload.UploadConfirmDialog.Message' | translate }}:</h6>
+                            <li>{{ 'artifact-upload.UploadConfirmDialog.FileMsg' | translate }} - {{uploadFilesResponse.uploadProjectFiles}}</li>
+                            <li>{{ 'artifact-upload.UploadConfirmDialog.SupportFileMsg' | translate }} - {{uploadFilesResponse.supportProjectFiles}}</li>
+                          </ul>">
+  <p-footer>
+    <button type="button" pButton icon="fa-check" label="{{ 'artifact-upload.UploadConfirmDialog.Ok' | translate }}" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog>

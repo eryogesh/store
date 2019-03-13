@@ -1,0 +1,75 @@
+{
+  "Auth": {
+    "Email": "Email",
+    "Password": "Password",
+    "ConfirmPassword": "Confirm Password",
+    "EmailFormatError": "Email is not in valid format",
+    "ConfirmPasswordError": "Passwords mismatch",
+    "Capgemini": "Capgemini",
+    "SkypeChat": "Skype Chat",
+    "Login": {
+      "Title": "Login",
+      "Submit": "Login",
+      "RegisterLink": "Sign Up",
+      "Username":"Username",
+      "Error":"Error",
+      "NameErrorMsg": "Name Should Contain Atleast 3 Char",
+      "UserEmailareInvalid":"User Email are Invalid",
+      "DomainErrorMsg":"Domain should be capgemini.com"
+    },
+    "Register": {
+      "Title": "Sign Up",
+      "Submit": "Create account",
+      "Back": "Go Back",
+      "SuccessMessage": "Your account has been successfully created",
+      "EmailRequiredError": "Email Id is required",
+      "PasswordRequiredError": "Password is required",
+      "PasswordLengthError": "Must be longer than 6 characters",
+      "FullNameErrorMsg":"Fullname does not contains numeric or special characters",
+      "DesignationErrorMSg":"Designation does not contains numeric or special characters",
+      "EmailId":"Email Id",
+      "FullName":"Full Name",
+      "Password":"Password",
+      "Designation":"designation",
+      "SubmitBtn":"Submit",
+      "Error":"Error"
+
+
+    },
+    "TagFilter": {
+      "Title": "Select",
+      "ViewAll": "View All",
+      "Sales": "Sales",
+      "Delivery": "Delivery"
+    }
+  },
+  "Profile": {
+    "Title": "Set Preference",
+    "Submit": "Create account",
+    "Back": "Go Back",
+    "SuccessMessage": "Your account has been successfully created",
+    "ChangeProfileImage": "Change profile image",
+    "EditUserDetails": "Edit user details",
+    "AssetApprove": "Asset Approve",
+    "AssetSubmitted": "Asset submitted",
+    "AssetRejected": "Asset Rejected",
+    "DownloadCount": "Download Count",
+    "ViewCount": "View count",
+    "AvgRating": "Avg rating",
+    "UserNameErrorMessage": "User Name does not contains numeric or special characters",
+    "UserName": "User Name",
+    "DesignationErrorMessage": "Designation does not contains numeric or special characters",
+    "designation": "designation",
+    "Uploads":"Uploads",
+    "Downloads":"Downloads",
+    "Favourites":"Favourites",
+    "NoRecordFound":"No Record Found",
+    "SuccessMsg":"Success",
+    "DataLoaded":"Data Loaded",
+    "Between":"Between",
+    "And":"and",
+    "ErrorMessage":"Error Message",
+    "PleaseUploadValidImage":"Please Upload Valid Image",
+    "PleaseSelectAtleastOneMainCategory":"Please Select Atleast One Main Category"
+  }
+}

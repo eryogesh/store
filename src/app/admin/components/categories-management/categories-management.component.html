@@ -1,0 +1,129 @@
+<div class="mini-layout container-fluid" style="padding-top: 2%;">
+    <div class="row headingMainCat">
+        <div class="col-lg-12 col-sm-12 col-md-12 maincatTitle">
+            <h3 id="Maintitle">{{ 'Admin.CategoriesManagement.Title' | translate }}</h3>
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="row">
+                <div class="form-group has-feedback col-10 mainCateTitle1">
+                    <h4>
+                        <b>{{ 'Admin.CategoriesManagement.SubTitle' | translate }}</b>
+                    </h4>
+                </div>
+                <i class="glyphicon glyphicon-plus-sign category-buttons" pTooltip="{{ 'Admin.CategoriesManagement.AddCategory' | translate }}" tooltipPosition="top"
+                    (click)="showCategoryDialog()"></i>
+                <i class="glyphicon glyphicon-minus-sign" pTooltip="{{ 'Admin.CategoriesManagement.DeleteCategory' | translate }}" tooltipPosition="top"
+                    (click)="showDeleteDialog()"></i>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6 " *ngFor="let category of categories">
+                    <span class="main-categorylist" id="" value="">{{category.categoryName}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 subcategories-header">
+            <div class="row">
+                <div class="form-group has-feedback col-10">
+                    <h4>
+                        <b>{{ 'Admin.CategoriesManagement.SubCategories' | translate }}</b>
+                    </h4>
+                </div>
+                <div class="col-1 addSubCategoryGlypicon">
+                    <span class="glyphicon glyphicon-plus-sign" pTooltip="{{'Admin.CategoriesManagement.AddSubCategory' | translate }}" tooltipPosition="top"
+                        (click)="showSubcategoryDialog()"></span>
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xs-12 subcategory-row">
+                <div class="row">
+                    <div class="col-xs-12 col-lg-6 col-sm-12 col-md-6">
+                        <select class="select-dropdown" (change)="showSubCat($event.target.value)">
+                            <option value="">{{'Admin.CategoriesManagement.SelectCategory' | translate }}</option>
+                            <option *ngFor="let category of categories" [value]=category.catID>
+                                {{category.categoryName}}
+                            </option>
+                        </select>
+                        <br/>
+                    </div>
+                </div>
+                <div class="row subcateogrydata-row">
+                    <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6" *ngFor="let subcategory of subcateogryData" (change)="onUpdateCat(subcategory, $event)">
+                        <label class="subcategory-label" [hidden]="selectedID == null">
+                            <input class="subcategory-checkbox" type="checkbox" id="{{subcategory.catID}}" name="subcateogryData" [value]="subcategory.categoryName"
+                                [checked]="subcategory.catParentId == selectedID" />{{subcategory.categoryName}}
+                        </label>
+                    </div>
+                </div>
+                <div class="success-container" *ngIf="succesMsgUpdate">
+                    <span> {{succesMsgUpdate}} </span>
+                </div>
+                <div class="row" style="float: right; margin-top: 30px;">
+                    <div class="col-xs-12 btnUpdateCategory">
+                        <!-- <button type="button" pButton class="btn btn-default btn-md pull-right" style="margin-right: 13%;" *ngIf="updateSubcat" (click)="updateSubcategory();">{{'Admin.CategoriesManagement.UpdateCategory' | translate }}</button> -->
+                        <button pButton type="button" label="{{'Admin.CategoriesManagement.UpdateCategory' | translate }}" class="button-style" (click)="updateSubcategory();"></button>
+                    </div>
+                </div>
+                <div class="error-container" *ngIf="errorMsgUpdate">
+                    <span> {{errorMsgUpdate}} </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="{{'Admin.CategoriesManagement.AddCategory' | translate }}" [(visible)]="displayMainCategory" [width]="500"
+    modal="modal" [responsive]="true" dismissableMask="true">
+    <form #formCtrl1="ngForm">
+        <input type="text" id="newCategory" name="newCategory" [(ngModel)]="categoryModel" placeholder="{{'Admin.Category' | translate }}"
+            required>
+        <br>
+        <br>
+        <p-footer>
+            <div class="ui-dialog-buttonpane addcatdialog-buttons">
+                <button pButton type="button" label="{{'Admin.CategoriesManagement.Submit' | translate }}" class="button-style" (click)="addCategory(categoryModel,0)" [disabled]="!formCtrl1.form.valid"></button>
+                <button pButton type="button" label="{{ 'CancelBtn' | translate }}" class="ui-button-secondary button-style" (click)="cancel()"></button>
+            </div>
+        </p-footer>
+    </form>
+</p-dialog>
+
+<p-dialog header="{{'Admin.CategoriesManagement.SelectCategory' | translate }}" [(visible)]="displayDeleteDialog" [width]="600"
+    modal="modal" [responsive]="true" dismissableMask="true">
+    <div class="row">
+        <div class="col-lg-6 col-sm-3 col-md-3 col-xs-6 deletecategory-div" *ngFor="let category of categories" (change)="onRemoveCat(category, $event)">
+            <label class="removecategory-label">
+                <input type="checkbox" name="categories" value="{{category.categoryName}}" [checked]="categories.indexOf(category) < 0" [(ngModel)]="category.checked"> {{category.categoryName}}
+            </label>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane">
+            <button pButton type="button" label="{{'Admin.CategoriesManagement.Delete' | translate }}" class="button-style" (click)="deleteCategory()"></button>
+            <button pButton type="button" label="{{ 'CancelBtn' | translate }}" class="ui-button-secondary button-style" (click)="cancel()"></button>
+        </div>
+        <div class="error-container" *ngIf="deleteErrorMsg">
+            <span> {{deleteErrorMsg}} </span>
+        </div>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="{{'Admin.CategoriesManagement.AddSubCategory' | translate }}" [(visible)]="displaySubCategory" [width]="500"
+    modal="modal" [responsive]="true" dismissableMask="true">
+    <form #formCtrl="ngForm">
+        <input type="text" id="inputbox" value="" name="NewSubCategory" [(ngModel)]="subCategoryModel" placeholder="{{'Admin.CategoriesManagement.SubCatCategory' | translate }}"
+            required>
+        <br>
+        <br>
+        <p-footer>
+            <div class="dialog-button-div">                
+                <button pButton type="button" label="{{'Admin.CategoriesManagement.Submit' | translate }}" class="button-style" (click)="addCategory(subCategoryModel,selectedID)" [disabled]="!formCtrl.form.valid"></button>
+                <button pButton type="button" label="{{ 'CancelBtn' | translate }}" class="ui-button-secondary button-style" (click)="cancel()"></button>
+            </div>
+
+        </p-footer>
+    </form>
+</p-dialog>
+
+<p-growl [style]="{'top':'100px'}"></p-growl>
